@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace Aplikacja
 {
@@ -20,9 +21,23 @@ namespace Aplikacja
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IStorage storage;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            storage = new RuntimeMockStorage();
+
+            song_list_view.ItemsSource = storage.GetSongs();
         }
+
+
+        //private void button_remove_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+
     }
 }
