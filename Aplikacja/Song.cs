@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+namespace Aplikacja
+{
     class Song
     {
         public int Id { get; set; }
@@ -16,4 +18,4 @@ using System.Threading.Tasks;
 
         public int SongId { get; set; }
     }
-
+}

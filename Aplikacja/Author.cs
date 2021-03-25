@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
+namespace Aplikacja
+{
     class Author
     {
         public int Id { get; set; }
@@ -15,3 +17,4 @@ using System.Threading.Tasks;
         public List<Song> Songs { get; set; } = new List<Song>();
     }
 
+}
