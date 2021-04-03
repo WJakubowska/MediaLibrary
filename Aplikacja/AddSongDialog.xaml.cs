@@ -54,7 +54,7 @@ namespace Aplikacja
         private String songTitle = String.Empty;
         private String directory = String.Empty;
         private CollectionViewSource authorsViewSource;
-        private ObservableCollection<Author> authors;
+        private MainWindow mainWindow;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -106,18 +106,17 @@ namespace Aplikacja
             }
         }
 
-        public AddSongDialog(DatebaseContext context)
+        public AddSongDialog(MainWindow mainWindow)
         {
             InitializeComponent();
 
-            this.authors = context.Authors.Local.ToObservableCollection();
-            this.DataContext = this;
+            this.mainWindow = mainWindow;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
-            authorsViewSource.Source = authors;
+            authorsViewSource.Source = mainWindow.AuthorsViewSource.Source;
         }
 
         private void choose_button_Click(object sender, RoutedEventArgs e)
@@ -133,47 +132,26 @@ namespace Aplikacja
             }
         }
 
-        bool IsValid(DependencyObject node)
-        {
-            if (node != null)
-            {
-                if (Validation.GetHasError(node))
-                {
-                    if (node is IInputElement)
-                    {
-                        Keyboard.Focus((IInputElement) node);
-                    }
-                    return false;
-                }
-            }
-
-            foreach (var subnode in LogicalTreeHelper.GetChildren(node))
-            {
-                if (subnode is DependencyObject)
-                {
-                    if (!IsValid((DependencyObject)subnode))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
-            if (IsValid(this))
+            if (MyValidator.IsValid(this))
             {
                 this.DialogResult = true;
             }
         }
 
-        private void button_cancel_Click(object sender, RoutedEventArgs e)
+        private void button_add_author_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            var dlg = new AddAuthorDialog();
+            dlg.Owner = this;
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                var new_author = new Author() { Name = dlg.AuthorName };
+                mainWindow.Context.Authors.Add(new_author);
+                combox_authors.SelectedItem = new_author;
+            }
         }
-
-
     }
 }

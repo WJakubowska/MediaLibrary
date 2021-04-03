@@ -4,13 +4,12 @@
     x:Class="Aplikacja.AddSongDialog"
     xmlns:local="clr-namespace:Aplikacja"
     Title="Add Song"
-    Height="217"
-    Width="329"
-    MinHeight="10"
-    MinWidth="300"
+    MinHeight="250"
+    MinWidth="350"
     ResizeMode="CanResizeWithGrip"
     ShowInTaskbar="False"
-    WindowStartupLocation="CenterOwner" Loaded="Window_Loaded">
+    WindowStartupLocation="CenterOwner" Loaded="Window_Loaded"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}" Width="350" Height="250">
     <Window.Resources>
         <CollectionViewSource x:Key="authorsViewSource"/>
     </Window.Resources>
@@ -40,7 +39,7 @@
                       ItemsSource="{Binding Source={StaticResource authorsViewSource}}" 
                       DisplayMemberPath="Name"
                       SelectedValue="{Binding Path=Author}"/>
-            <Button x:Name="button_add_author" Grid.Column="1" VerticalAlignment="Stretch" Margin="10" Height="19" Content="Add"/>
+            <Button x:Name="button_add_author" Grid.Column="1" VerticalAlignment="Stretch" Margin="10" Height="19" Content="Add" Click="button_add_author_Click"/>
         </Grid>
 
         <!-- Song Title input -->
@@ -77,7 +76,7 @@
                 <ColumnDefinition Width="107"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="button_add"  Margin="4" Width="75" Click="button_add_Click" >Add</Button>
-            <Button x:Name="button_cancel" IsCancel="True"  Margin="4" Width="75" Grid.Column="1" Click="button_cancel_Click">Cancel</Button>
+            <Button x:Name="button_cancel" IsCancel="True"  Margin="4" Width="75" Grid.Column="1">Cancel</Button>
         </Grid>
     </Grid >
 </Window>

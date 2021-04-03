@@ -18,13 +18,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aplikacja
 {
+
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        enum LastFocusedListView
+        {
+            None,
+            Authors,
+            Songs
+        }
+
         private DatebaseContext _context = new DatebaseContextFactory().CreateDbContext(new string[]{"UseSqlite"});
-        public CollectionViewSource authorsViewSource { get; private set; }
+        private LastFocusedListView lastFocused = LastFocusedListView.None;
+
+        public CollectionViewSource AuthorsViewSource { get; private set; }
+        public DatebaseContext Context { get => _context; }
 
         public MainWindow()
         {
@@ -46,13 +58,13 @@ namespace Aplikacja
         {
             _context.Database.EnsureCreated();
             _context.Authors.Load();
-            authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
-            authorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
+            AuthorsViewSource = (CollectionViewSource)FindResource(nameof(AuthorsViewSource));
+            AuthorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
         }
 
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new AddSongDialog(_context);
+            var dlg = new AddSongDialog(this);
             dlg.Owner = this;
             Nullable<bool> result = dlg.ShowDialog();
 
@@ -61,6 +73,39 @@ namespace Aplikacja
                 _context.Songs.Add(new Song(){ Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
                 _context.SaveChanges();
             }
+        }
+
+        private void button_remove_Click(object sender, RoutedEventArgs e)
+        {
+            if (lastFocused == LastFocusedListView.None)
+            {
+                return;
+            }
+            
+            var lastFocusedListViewDelegate = CreateListViewDelegate();
+
+            string messageBoxText = lastFocusedListViewDelegate.Message;
+            string caption = "Aplikacja";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+
+            var result = MessageBox.Show(messageBoxText, caption, button, icon);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                lastFocusedListViewDelegate.DeleteRecord();
+                _context.SaveChanges();
+            }
+        }
+
+        private void AuthorsListView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            lastFocused = LastFocusedListView.Authors;
+        }
+
+        private void SongsListView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            lastFocused = LastFocusedListView.Songs;
         }
 
         private void init_db()
@@ -78,6 +123,21 @@ namespace Aplikacja
             _context.Songs.Add(new Song() {Title = "head will roll", Directory="ttps://www.youtube.com/watch?v=m9k7WgIPK14", Author=author2});
 
             _context.SaveChanges();
+        }
+
+        private ILastFocusedListViewDelegate CreateListViewDelegate()
+        {
+            switch (lastFocused)
+            {
+                case LastFocusedListView.Authors:
+                    return new AuthorsLastFocused(this);
+                case LastFocusedListView.Songs:
+                    return new SongsLastFocused(this);
+                default:
+                    break;
+            }
+
+            return null;
         }
     }
 }
