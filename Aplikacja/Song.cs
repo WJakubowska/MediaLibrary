@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Aplikacja
 {
-    class Song
+    public class Song
     {
-        public int Id { get; set; }
+        [Required]
+        public int SongId { get; set; }
         [MaxLength(100)]
         public string Title { get; set; } = string.Empty;
         public string Directory { get; set; } = string.Empty;
-        public Author SongAuthor { get; set; }
-
-        public int SongId { get; set; }
+        [Required]
+        public Author Author { get; set; }
     }
 }

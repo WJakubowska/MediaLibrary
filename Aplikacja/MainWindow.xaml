@@ -41,7 +41,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Title" Width="120" DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="Author" Width="50" DisplayMemberBinding="{Binding SongAuthor}" />
+                        <GridViewColumn Header="Author" Width="100" DisplayMemberBinding="{Binding SongAuthor}" />
                         <GridViewColumn Header="Directory" Width="150">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

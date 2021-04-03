@@ -11,11 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aplikacja
 {
-
-  
-
-
-    class DatebaseContext : DbContext
+    public class DatebaseContext : DbContext
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Song> Songs { get; set; }
@@ -27,15 +23,25 @@ namespace Aplikacja
         }
     }
 
-    class DatebaseContextFactory : IDesignTimeDbContextFactory<DatebaseContext>
+    public class DatebaseContextFactory : IDesignTimeDbContextFactory<DatebaseContext>
     {
         public DatebaseContext CreateDbContext(string[] args)
         {
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
                                                           .Build();
             var optionsBuilder = new DbContextOptionsBuilder<DatebaseContext>();
-            optionsBuilder
-                .UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
+
+            if (Array.Find(args, s => s == "UseSqlite") != null)
+            {
+                optionsBuilder
+                    .UseSqlite(configuration["ConnectionStrings:SqliteConnection"]);
+            }
+            else
+            {
+                optionsBuilder
+                    .UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
+            }
+
 
             return new DatebaseContext(optionsBuilder.Options);
         }

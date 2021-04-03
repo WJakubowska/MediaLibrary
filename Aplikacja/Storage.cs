@@ -30,9 +30,9 @@ namespace Aplikacja
             authors = new ObservableCollection<Author>() { author };
             songs = new ObservableCollection<Song>()
             {
-                new Song() { Title = "lofi chill", Directory = dir, SongAuthor = author },
-                new Song() { Title = "generic pop song title", Directory = dir, SongAuthor = author },
-                new Song() { Title = "общее название популярной песни # 2", Directory = dir, SongAuthor = author}
+                new Song() { Title = "lofi chill", Directory = dir, Author = author },
+                new Song() { Title = "generic pop song title", Directory = dir, Author = author },
+                new Song() { Title = "общее название популярной песни # 2", Directory = dir, Author = author}
             };
         }
 
@@ -53,9 +53,9 @@ namespace Aplikacja
 
         public void AddSong(Song song)
         {
-            if (authors.Contains(song.SongAuthor))
+            if (authors.Contains(song.Author))
             {
-                throw new ArgumentException($"Song author {song.SongAuthor} is not among known authors");
+                throw new ArgumentException($"Song author {song.Author} is not among known authors");
             }
 
             songs.Add(song);

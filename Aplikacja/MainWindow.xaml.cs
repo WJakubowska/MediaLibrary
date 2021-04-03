@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace Aplikacja
 {
@@ -21,23 +22,16 @@ namespace Aplikacja
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IStorage storage;
-
+        private DatebaseContext _context = new DatebaseContextFactory().CreateDbContext(new string[] { "UseSqlite" });
         public MainWindow()
         {
             InitializeComponent();
-
-            storage = new RuntimeMockStorage();
-
-            song_list_view.ItemsSource = storage.GetSongs();
         }
 
-
-        //private void button_remove_Click(object sender, RoutedEventArgs e)
-        //{
-
-        //}
-
-
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            _context.Dispose();
+            base.OnClosing(e);
+        }
     }
 }

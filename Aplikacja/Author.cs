@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Aplikacja
 {
-    class Author
+    public class Author
     {
-        public int Id { get; set; }
-        [MaxLength(100)] // nazwa maks 100 znakow
-        public string Name { get; set; } = string.Empty;
-
+        [Required]
+        public int AuthorId { get; set; }
+        [MaxLength(100)]
+        [Required]
+        public string Name { get; set; }
         public List<Song> Songs { get; set; } = new List<Song>();
     }
-
 }
