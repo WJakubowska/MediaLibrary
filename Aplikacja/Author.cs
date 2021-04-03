@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 
 namespace Aplikacja
@@ -15,6 +16,6 @@ namespace Aplikacja
         [MaxLength(100)]
         [Required]
         public string Name { get; set; }
-        public virtual List<Song> Songs { get; set; } = new List<Song>();
+        public virtual ObservableCollection<Song> Songs { get; set; } = new ObservableCollection<Song>();
     }
 }

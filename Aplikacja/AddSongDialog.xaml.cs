@@ -13,33 +13,111 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Aplikacja
 {
+    public class DirectoryIsSet : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (String.IsNullOrEmpty((string)value))
+            {
+                return new ValidationResult(false, "Directory not set");
+            }
+
+            return new ValidationResult(true, null);
+        }
+    }
+
+    public class TitleIsSet : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (String.IsNullOrEmpty((string)value))
+            {
+                return new ValidationResult(false, "Title not set");
+            }
+
+            return new ValidationResult(true, null);
+        }
+    }
+
     /// <summary>
     /// Interaction logic for AddSongDialog.xaml
     /// </summary>
-    public partial class AddSongDialog : Window
+    public partial class AddSongDialog : Window, INotifyPropertyChanged
     {
-        public Author Author { get; set; }
-        public String SongTitle { get; set; }
-        public String Directory { get; set; }
-
+        private Author author;
+        private String songTitle = String.Empty;
+        private String directory = String.Empty;
         private CollectionViewSource authorsViewSource;
-        private DatebaseContext _context;
+        private ObservableCollection<Author> authors;
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public Author Author
+        {
+            get => this.author;
+
+            set
+            {
+                if (value != this.author)
+                {
+                    this.author = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public String SongTitle
+        {
+            get => this.songTitle;
+
+            set
+            {
+                if (value != this.songTitle)
+                {
+                    this.songTitle = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public String Directory
+        {
+            get => this.directory;
+
+            set
+            {
+                if (value != this.directory)
+                {
+                    this.directory = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public AddSongDialog(DatebaseContext context)
         {
             InitializeComponent();
 
-            _context = context;
+            this.authors = context.Authors.Local.ToObservableCollection();
+            this.DataContext = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _context.Authors.Load();
             authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
-            authorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
+            authorsViewSource.Source = authors;
         }
 
         private void choose_button_Click(object sender, RoutedEventArgs e)
@@ -52,25 +130,32 @@ namespace Aplikacja
             if (result == true)
             {
                 this.Directory = dlg.FileName;
-                textbox_song_directory.Text = dlg.FileName;
             }
         }
 
-        private bool IsValid()
+        bool IsValid(DependencyObject node)
         {
-            if (combox_authors.SelectedItem == null)
+            if (node != null)
             {
-                return false;
+                if (Validation.GetHasError(node))
+                {
+                    if (node is IInputElement)
+                    {
+                        Keyboard.Focus((IInputElement) node);
+                    }
+                    return false;
+                }
             }
 
-            if (String.IsNullOrEmpty(textbox_song_name.Text))
+            foreach (var subnode in LogicalTreeHelper.GetChildren(node))
             {
-                return false;
-            }
-
-            if (String.IsNullOrEmpty(this.Directory))
-            {
-                return false;
+                if (subnode is DependencyObject)
+                {
+                    if (!IsValid((DependencyObject)subnode))
+                    {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -78,11 +163,8 @@ namespace Aplikacja
 
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
-            if (this.IsValid())
+            if (IsValid(this))
             {
-                this.Author = (Author)combox_authors.SelectedItem;
-                this.SongTitle = textbox_song_name.Text;
-
                 this.DialogResult = true;
             }
         }

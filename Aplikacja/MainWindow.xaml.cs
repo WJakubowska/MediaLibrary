@@ -34,8 +34,6 @@ namespace Aplikacja
             //_context.Database.EnsureDeleted();
             //_context.Database.EnsureCreated();
             //init_db();
-
-
         }
 
         protected override void OnClosing(CancelEventArgs e)
