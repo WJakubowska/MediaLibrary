@@ -16,6 +16,6 @@ namespace Aplikacja
         public string Title { get; set; } = string.Empty;
         public string Directory { get; set; } = string.Empty;
         [Required]
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

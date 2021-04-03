@@ -30,6 +30,7 @@ namespace Aplikacja
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
                                                           .Build();
             var optionsBuilder = new DbContextOptionsBuilder<DatebaseContext>();
+            optionsBuilder.UseLazyLoadingProxies();
 
             if (Array.Find(args, s => s == "UseSqlite") != null)
             {

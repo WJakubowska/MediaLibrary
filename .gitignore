@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # sqlite db
 Aplikacja.db
+
+# vscode files
+.vscode/
