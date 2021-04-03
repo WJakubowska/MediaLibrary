@@ -24,7 +24,7 @@ namespace Aplikacja
     public partial class MainWindow : Window
     {
         private DatebaseContext _context = new DatebaseContextFactory().CreateDbContext(new string[]{"UseSqlite"});
-        private CollectionViewSource authorsViewSource;
+        public CollectionViewSource authorsViewSource { get; private set; }
 
         public MainWindow()
         {
@@ -35,7 +35,7 @@ namespace Aplikacja
             //_context.Database.EnsureCreated();
             //init_db();
 
-            authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
+
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -48,7 +48,21 @@ namespace Aplikacja
         {
             _context.Database.EnsureCreated();
             _context.Authors.Load();
+            authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
             authorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
+        }
+
+        private void button_add_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new AddSongDialog(_context);
+            dlg.Owner = this;
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                _context.Songs.Add(new Song(){ Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
+                _context.SaveChanges();
+            }
         }
 
         private void init_db()
