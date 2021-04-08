@@ -32,7 +32,9 @@ namespace Aplikacja
             Songs
         }
 
-        private DatebaseContext _context = new DatebaseContextFactory().CreateDbContext(new string[]{"UseSqlite"});
+        private DatebaseContext _context = new DatebaseContext();
+ 
+
         private LastFocusedListView lastFocused = LastFocusedListView.None;
 
         public CollectionViewSource AuthorsViewSource { get; private set; }
@@ -58,6 +60,7 @@ namespace Aplikacja
         {
             _context.Database.EnsureCreated();
             _context.Authors.Load();
+            _context.Songs.Load();
             AuthorsViewSource = (CollectionViewSource)FindResource(nameof(AuthorsViewSource));
             AuthorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
         }
@@ -108,22 +111,7 @@ namespace Aplikacja
             lastFocused = LastFocusedListView.Songs;
         }
 
-        private void init_db()
-        {
-            var author1 = _context.Authors.Add(new Author() { Name = "John Doe" }).Entity;
-            var author2 = _context.Authors.Add(new Author() { Name = "Yeah Yeah Yeahs"}).Entity;
 
-
-            string[] titles = new string[]{"lofi chill", "generic pop song title", "общее название популярной песни # 2"};
-            foreach (var title in titles)
-            {
-                _context.Songs.Add(new Song() {Title = title, Directory = "Z:/path/to/song", Author = author1});
-            }
-
-            _context.Songs.Add(new Song() {Title = "head will roll", Directory="ttps://www.youtube.com/watch?v=m9k7WgIPK14", Author=author2});
-
-            _context.SaveChanges();
-        }
 
         private ILastFocusedListViewDelegate CreateListViewDelegate()
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,36 +17,25 @@ namespace Aplikacja
         public DbSet<Author> Authors { get; set; }
         public DbSet<Song> Songs { get; set; }
 
-        public DatebaseContext(DbContextOptions<DatebaseContext> options)
-            : base(options)
-        {
 
+        public DatebaseContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MediaDB");
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Author>(entity => {
+                entity.HasIndex(e => e.Name).IsUnique();
+            });
         }
     }
 
-    public class DatebaseContextFactory : IDesignTimeDbContextFactory<DatebaseContext>
-    {
-        public DatebaseContext CreateDbContext(string[] args)
-        {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
-                                                          .Build();
-            var optionsBuilder = new DbContextOptionsBuilder<DatebaseContext>();
-            optionsBuilder.UseLazyLoadingProxies();
 
-            if (Array.Find(args, s => s == "UseSqlite") != null)
-            {
-                optionsBuilder
-                    .UseSqlite(configuration["ConnectionStrings:SqliteConnection"]);
-            }
-            else
-            {
-                optionsBuilder
-                    .UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
-            }
-
-
-            return new DatebaseContext(optionsBuilder.Options);
-        }
-    }
 
 }
