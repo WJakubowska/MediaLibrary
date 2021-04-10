@@ -18,6 +18,8 @@ namespace Aplikacja
         public DbSet<Song> Songs { get; set; }
 
 
+
+
         public DatebaseContext()
         {
             Database.EnsureCreated();

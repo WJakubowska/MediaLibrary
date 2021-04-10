@@ -64,4 +64,8 @@ namespace Aplikacja
             mainWindow.Context.Authors.Remove(author);
         }
     }
+
+    
+
+
 }

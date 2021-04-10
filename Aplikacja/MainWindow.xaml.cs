@@ -78,6 +78,15 @@ namespace Aplikacja
             }
         }
 
+        private void button_yt_Click(object sender, RoutedEventArgs e)
+        {
+            var koko = new YouTubeSearch();
+            koko.ShowDialog();
+
+
+
+        }
+
         private void button_remove_Click(object sender, RoutedEventArgs e)
         {
             if (lastFocused == LastFocusedListView.None)
