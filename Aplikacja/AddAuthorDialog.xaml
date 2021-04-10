@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Aplikacja"
-        mc:Ignorable="d"
+        mc:Ignorable="d" Background="Gainsboro"
         Title="Add Author" Height="150" Width="290"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
@@ -27,7 +27,19 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button Grid.Row="1" Grid.Column="0" Margin="10" Height="18" Content="Add" Click="button_add_Clicked"/>
-        <Button Grid.Row="1" Grid.Column="1" Margin="10" Height="18" Content="Cancel" IsCancel="True"/>
+        <Button Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="0" Margin="10" Height="18" Content="Add" Click="button_add_Clicked">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="1" Margin="10" Height="18" Content="Cancel" IsCancel="True">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>
