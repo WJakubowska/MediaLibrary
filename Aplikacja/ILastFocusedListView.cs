@@ -9,6 +9,12 @@ using System.Collections.ObjectModel;
 
 namespace Aplikacja
 {
+    public enum LastFocusedListView
+    {
+        None,
+        Authors,
+        Songs
+    }
     public interface ILastFocusedListViewDelegate
     {
         string Message { get; }
@@ -56,7 +62,7 @@ namespace Aplikacja
         public AuthorsLastFocused(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
-        }   
+        }
 
         public void DeleteRecord()
         {
@@ -65,7 +71,23 @@ namespace Aplikacja
         }
     }
 
-    
 
+    public class LastFocusedListViewFactory
+    {
+        public static ILastFocusedListViewDelegate Create(LastFocusedListView lastFocusedListView, MainWindow mainWindow)
+        {
+            switch (lastFocusedListView)
+            {
+                case LastFocusedListView.Authors:
+                    return new AuthorsLastFocused(mainWindow);
+                case LastFocusedListView.Songs:
+                    return new SongsLastFocused(mainWindow);
+                default:
+                    break;
+            }
+
+            return null;
+        }
+    }
 
 }

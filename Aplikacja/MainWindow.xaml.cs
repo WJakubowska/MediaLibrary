@@ -25,15 +25,9 @@ namespace Aplikacja
     /// </summary>
     public partial class MainWindow : Window
     {
-        enum LastFocusedListView
-        {
-            None,
-            Authors,
-            Songs
-        }
 
         private DatebaseContext _context = new DatebaseContext();
- 
+
 
         private LastFocusedListView lastFocused = LastFocusedListView.None;
 
@@ -100,8 +94,8 @@ namespace Aplikacja
             {
                 return;
             }
-            
-            var lastFocusedListViewDelegate = CreateListViewDelegate();
+
+            var lastFocusedListViewDelegate = LastFocusedListViewFactory.Create(lastFocused, this);
 
             string messageBoxText = lastFocusedListViewDelegate.Message;
             string caption = "Aplikacja";
@@ -125,21 +119,6 @@ namespace Aplikacja
         private void SongsListView_GotFocus(object sender, RoutedEventArgs e)
         {
             lastFocused = LastFocusedListView.Songs;
-        }
-
-        private ILastFocusedListViewDelegate CreateListViewDelegate()
-        {
-            switch (lastFocused)
-            {
-                case LastFocusedListView.Authors:
-                    return new AuthorsLastFocused(this);
-                case LastFocusedListView.Songs:
-                    return new SongsLastFocused(this);
-                default:
-                    break;
-            }
-
-            return null;
         }
 
         private void init_db()
