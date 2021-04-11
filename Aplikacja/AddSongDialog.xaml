@@ -10,9 +10,14 @@
     ResizeMode="CanResizeWithGrip"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterOwner" Loaded="Window_Loaded"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}" Width="350" Height="250">
+    DataContext="{Binding RelativeSource={RelativeSource Self}}" Width="500" Height="250">
     <Window.Resources>
         <CollectionViewSource x:Key="authorsViewSource"/>
+        <Style TargetType="Grid" x:Key="GridStyle">
+            <Style.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource BrownButtonStyle}"/>
+            </Style.Resources>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -31,7 +36,7 @@
         <TextBlock  TextWrapping="Wrap" Text="Directory:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
         
         <!-- Authors ComboBox -->
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="0" Grid.Column="1" Style="{StaticResource GridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="1*"/>
@@ -40,17 +45,11 @@
                       ItemsSource="{Binding Source={StaticResource authorsViewSource}}" 
                       DisplayMemberPath="Name"
                       SelectedValue="{Binding Path=Author}"/>
-            <Button x:Name="button_add_author" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Grid.Column="1" VerticalAlignment="Stretch" Margin="10" Height="19" Content="Add" Click="button_add_author_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="button_add_author" Grid.Column="1" VerticalAlignment="Stretch" Margin="10" Height="19" Content="Add" Click="button_add_author_Click"/>
         </Grid>
 
         <!-- Song Title input -->
-        <TextBox Grid.Column="1" Height="23" Grid.Row="1" TextWrapping="Wrap" Width="120">
+        <TextBox Margin="5" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap">
             <TextBox.Text>
                 <Binding Path="SongTitle" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -61,7 +60,7 @@
         </TextBox>
         
         <!-- Directory input -->
-        <Grid Grid.Row="2" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1" Style="{StaticResource GridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
@@ -75,33 +74,17 @@
                     </Binding>
                 </TextBlock.Text>
             </TextBlock>
-            <Button x:Name="choose_button" Content="Choose..." Grid.Column="1" Margin="10" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Click="choose_button_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="choose_button" Content="Choose..." Grid.Column="1" Margin="10"  Click="choose_button_Click"/>
         </Grid>
-        <Grid Grid.Row="3" Grid.Column="1">
+        
+        <!-- 'Add' and 'Cancel' buttons -->
+        <Grid Grid.Row="3" Grid.Column="1" Style="{StaticResource GridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="107"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="button_add"  Margin="4" Width="75" Click="button_add_Click" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" >Add
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="button_cancel" IsCancel="True"  Margin="4" Width="75" Grid.Column="1" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" >Cancel
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="button_add"  Margin="4" Width="75" Click="button_add_Click" Content="Add" />
+            <Button x:Name="button_cancel" IsCancel="True"  Margin="4" Width="75" Grid.Column="1" Content="Cancel"/>
         </Grid>
     </Grid >
 </Window>

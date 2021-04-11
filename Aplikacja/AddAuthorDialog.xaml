@@ -7,6 +7,9 @@
         mc:Ignorable="d" Background="Gainsboro"
         Title="Add Author" Height="150" Width="290"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -16,15 +19,12 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="New Author: "/>
-        <TextBox Grid.Row="0" Grid.Column="1" Margin="10" Height="18">
+        <TextBox Name="AuthorTextBox" Grid.Row="0" Grid.Column="1" Margin="10" Height="18">
             <TextBox.Text>
                 <Binding Path="AuthorName" UpdateSourceTrigger="PropertyChanged">
-                    <Binding.ValidationRules>
-                        <local:AuthorNameValidation ValidatesOnTargetUpdated="True"/>
-                    </Binding.ValidationRules>
-                </Binding>
+            </Binding>
             </TextBox.Text>
         </TextBox>
         <Button Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Grid.Row="1" Grid.Column="0" Margin="10" Height="18" Content="Add" Click="button_add_Clicked">

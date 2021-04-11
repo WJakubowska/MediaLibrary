@@ -142,7 +142,7 @@ namespace Aplikacja
 
         private void button_add_author_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new AddAuthorDialog();
+            var dlg = new AddAuthorDialog(this.mainWindow);
             dlg.Owner = this;
             Nullable<bool> result = dlg.ShowDialog();
 

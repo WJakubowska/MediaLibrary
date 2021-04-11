@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="BrownButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Tan"/>
+        <Setter Property="Foreground" Value="Maroon"/>
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="5"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+    <Style x:Key="BigBrownButtonStyle" TargetType="Button" BasedOn="{StaticResource BrownButtonStyle}">
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+</ResourceDictionary>

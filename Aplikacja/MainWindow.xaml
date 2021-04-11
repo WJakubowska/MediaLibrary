@@ -23,27 +23,13 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
-            <Button x:Name="button_add"  Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black"  Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Width="80" Click="button_add_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="button_yt" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Content="Search in YT" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Width="80" Click="button_yt_Click">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            <Button x:Name="button_remove" Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Content="Remove" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Width="80" Click="button_remove_Click" >
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="5"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Button x:Name="button_add" Style="{StaticResource BrownButtonStyle}"  Content="Add" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Grid.Row="0" Width="80" Click="button_add_Click"/>
+            <Button x:Name="button_yt" Style="{StaticResource BrownButtonStyle}" Content="Search in YT" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Grid.Row="1" Width="80" Click="button_yt_Click"/>
+            <Button x:Name="button_remove" Style="{StaticResource BrownButtonStyle}" Content="Remove" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Grid.Row="2" Width="80" Click="button_remove_Click" />
+
 
         </Grid>
         <Grid Grid.Column="1">

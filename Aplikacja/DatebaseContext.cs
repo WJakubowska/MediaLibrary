@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +16,6 @@ namespace Aplikacja
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Song> Songs { get; set; }
-
-
-
 
         public DatebaseContext()
         {

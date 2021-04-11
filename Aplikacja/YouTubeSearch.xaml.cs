@@ -15,10 +15,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
-
+using System.Globalization;
 
 namespace Aplikacja
 {
+    public class VideoIsSelected : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return new ValidationResult(false, "Must select");
+            }
+
+            return ValidationResult.ValidResult;
+        }
+    }
+
     /// <summary>
     /// Logika interakcji dla klasy YouTubeSearch.xaml
     /// </summary>
@@ -35,10 +48,9 @@ namespace Aplikacja
             public string linkYT { get; set; }
         }
 
+        public Videos Video { get; set; }
+
         private ObservableCollection<Videos> videos;
-
-       // public List<Videos> videos { get; set; }
-
  
 
 
@@ -46,9 +58,6 @@ namespace Aplikacja
         public YouTubeSearch()
         {
             InitializeComponent();
-
-            
-
         }
 
         private void button_search_Click(object sender, RoutedEventArgs e)
@@ -78,8 +87,6 @@ namespace Aplikacja
         }
 
         [STAThread]
-
-
         public async Task Run(string term)
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -88,15 +95,14 @@ namespace Aplikacja
                 ApplicationName = this.GetType().ToString()
             });
 
+            SearchButton.IsEnabled = false;
+
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = term; // Replace with your search term.
+            searchListRequest.Q = term; 
             searchListRequest.MaxResults = 10;
 
             // Call the search.list method to retrieve results matching the specified query term.
             var searchListResponse = await searchListRequest.ExecuteAsync();
-
-
-            // videos = new List<Videos>();
 
             videos = new ObservableCollection<Videos>();
             YTvideo.ItemsSource = videos;
@@ -118,9 +124,15 @@ namespace Aplikacja
                 }
             }
 
-            DataContext = this;
+            SearchButton.IsEnabled = true;
         }
 
-
+        private void Add_Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (MyValidator.IsValid(this))
+            {
+                this.DialogResult = true;
+            }
+        }
     }
 }

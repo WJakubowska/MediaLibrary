@@ -5,33 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Aplikacja"
         mc:Ignorable="d" Background="PaleGoldenrod"
-        Title="YouTubeSearch" Height="450" Width="800">
-    <Grid>
+        Title="YouTubeSearch" Height="479" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid MinWidth="80">
         <Grid.RowDefinitions>
-            <RowDefinition Height="54*"/>
-            <RowDefinition Height="163*"/>
+            <RowDefinition Height="115*"/>
+            <RowDefinition Height="294*"/>
+            <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
         <TextBox x:Name="Term" HorizontalAlignment="Left" Margin="85,0,0,0"  Background="LightGray" TextWrapping="Wrap" FontSize="25"  VerticalAlignment="Center" Width="343" Height="38"/>
-        <ListView  Background="Gainsboro"  Name ="YTvideo" Margin="40,110,40,15" Grid.RowSpan="2">
+        <ListView  Background="Gainsboro"  Name ="YTvideo" Margin="40,2,40,15" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding name }" Width="400"/>
-
                     <GridViewColumn Header="Link to YouTube" DisplayMemberBinding="{Binding linkYT }" Width="400"/>
-
                 </GridView>
             </ListView.View>
+            <ListView.SelectedItem>
+                <Binding Path="Video" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:VideoIsSelected ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </ListView.SelectedItem>
         </ListView>
-        <Button x:Name="Search"  Background="Tan" Foreground="Maroon" BorderThickness="1" BorderBrush="Black" Content="Search" FontSize="20" HorizontalAlignment="Left" Margin="448,0,0,0" VerticalAlignment="Center" Height="38" Width="100" Click="button_search_Click" >
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Button x:Name="SearchButton" Style="{StaticResource BigBrownButtonStyle}" Content="Search"  HorizontalAlignment="Left"
+                Margin="448,0,0,0" VerticalAlignment="Center" Click="button_search_Click" MinWidth="80"/>
 
-
-
-
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Add" Style="{StaticResource BigBrownButtonStyle}"  Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Add_Button_Click" MinWidth="80"/>
+            <Button Content="Cancel" Style="{StaticResource BigBrownButtonStyle}" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsCancel="True" MinWidth="80"/>
+        </Grid>
     </Grid>
 </Window>

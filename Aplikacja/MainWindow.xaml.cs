@@ -43,11 +43,6 @@ namespace Aplikacja
         public MainWindow()
         {
             InitializeComponent();
-
-            // Used for quick model changes without Migrations
-            //_context.Database.EnsureDeleted();
-            //_context.Database.EnsureCreated();
-            //init_db();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -65,26 +60,38 @@ namespace Aplikacja
             AuthorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
         }
 
-        private void button_add_Click(object sender, RoutedEventArgs e)
+        private void processAddSongDialogResult(Nullable<bool> result, AddSongDialog dlg)
         {
-            var dlg = new AddSongDialog(this);
-            dlg.Owner = this;
-            Nullable<bool> result = dlg.ShowDialog();
-
             if (result == true)
             {
-                _context.Songs.Add(new Song(){ Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
+                _context.Songs.Add(new Song() { Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
                 _context.SaveChanges();
             }
         }
 
+        private void button_add_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new AddSongDialog(this);
+            dlg.Owner = this;
+
+            processAddSongDialogResult(dlg.ShowDialog(), dlg);
+        }
+
         private void button_yt_Click(object sender, RoutedEventArgs e)
         {
-            var koko = new YouTubeSearch();
-            koko.ShowDialog();
+            var youtubeDlg = new YouTubeSearch();
+            youtubeDlg.Owner = this;
+            Nullable<bool> result = youtubeDlg.ShowDialog();
 
+            if (result == true)
+            {
+                var addSongDlg = new AddSongDialog(this);
+                addSongDlg.Owner = this;
+                addSongDlg.SongTitle = youtubeDlg.Video.name;
+                addSongDlg.Directory = youtubeDlg.Video.linkYT;
 
-
+                processAddSongDialogResult(addSongDlg.ShowDialog(), addSongDlg);
+            }
         }
 
         private void button_remove_Click(object sender, RoutedEventArgs e)
@@ -120,8 +127,6 @@ namespace Aplikacja
             lastFocused = LastFocusedListView.Songs;
         }
 
-
-
         private ILastFocusedListViewDelegate CreateListViewDelegate()
         {
             switch (lastFocused)
@@ -135,6 +140,23 @@ namespace Aplikacja
             }
 
             return null;
+        }
+
+        private void init_db()
+        {
+            var author1 = _context.Authors.Add(new Author() { Name = "John Doe" }).Entity;
+            var author2 = _context.Authors.Add(new Author() { Name = "Yeah Yeah Yeahs" }).Entity;
+
+
+            string[] titles = new string[] { "lofi chill", "generic pop song title", "общее название популярной песни # 2" };
+            foreach (var title in titles)
+            {
+                _context.Songs.Add(new Song() { Title = title, Directory = "Z:/path/to/song", Author = author1 });
+            }
+
+            _context.Songs.Add(new Song() { Title = "head will roll", Directory = "ttps://www.youtube.com/watch?v=m9k7WgIPK14", Author = author2 });
+
+            _context.SaveChanges();
         }
     }
 }
