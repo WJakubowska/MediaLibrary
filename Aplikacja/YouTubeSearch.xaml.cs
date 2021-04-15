@@ -141,7 +141,6 @@ namespace Aplikacja
         {
             var urlPart = ((Hyperlink)sender).NavigateUri;
             var fullUrl = string.Format("{0}", urlPart);
-            MessageBox.Show(fullUrl);
             Process.Start(new ProcessStartInfo(fullUrl) { UseShellExecute = true });
             e.Handled = true;
         }
