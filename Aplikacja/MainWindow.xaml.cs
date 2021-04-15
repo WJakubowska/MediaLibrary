@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Aplikacja
 {
@@ -115,6 +116,15 @@ namespace Aplikacja
         {
             lastFocused = LastFocusedListView.Authors;
         }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            var urlPart = ((Hyperlink)sender).NavigateUri;
+            var fullUrl = string.Format("{0}", urlPart);
+            Process.Start(new ProcessStartInfo(fullUrl) { UseShellExecute = true });
+            e.Handled = true;
+        }
+
 
         private void SongsListView_GotFocus(object sender, RoutedEventArgs e)
         {

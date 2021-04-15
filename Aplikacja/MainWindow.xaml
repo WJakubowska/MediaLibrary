@@ -63,7 +63,11 @@
                             <GridViewColumn Header="Directory" Width="150">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Directory}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand"/>
+                                        <TextBlock>
+                                        <Hyperlink NavigateUri="{Binding Path=Directory}" RequestNavigate="Hyperlink_OnRequestNavigate">
+                                        <TextBlock Text="{Binding Directory}" />
+                                        </Hyperlink>
+                                        </TextBlock>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

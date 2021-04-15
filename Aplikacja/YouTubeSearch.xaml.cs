@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Diagnostics;
+using System.Windows.Navigation;
 
 namespace Aplikacja
 {
@@ -116,7 +118,7 @@ namespace Aplikacja
                     case "youtube#video":
                         Videos video = new Videos();
                         video.name = String.Format("{0}", searchResult.Snippet.Title);
-                        video.linkYT = String.Format("https://www.youtube.com/watch?v={0}", searchResult.Id.VideoId);
+                        video.linkYT = String.Format("http://www.youtube.com/watch?v={0}", searchResult.Id.VideoId);
                         videos.Add(video);
                         break;
 
@@ -134,5 +136,17 @@ namespace Aplikacja
                 this.DialogResult = true;
             }
         }
+
+        private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            var urlPart = ((Hyperlink)sender).NavigateUri;
+            var fullUrl = string.Format("{0}", urlPart);
+            MessageBox.Show(fullUrl);
+            Process.Start(new ProcessStartInfo(fullUrl) { UseShellExecute = true });
+            e.Handled = true;
+        }
+
+
+
     }
 }

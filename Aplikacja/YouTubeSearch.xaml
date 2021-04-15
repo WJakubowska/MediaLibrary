@@ -18,7 +18,17 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding name }" Width="400"/>
-                    <GridViewColumn Header="Link to YouTube" DisplayMemberBinding="{Binding linkYT }" Width="400"/>
+                    <GridViewColumn Header="Link to YouTube" Width="400">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                            <Hyperlink NavigateUri="{Binding Path=linkYT}" RequestNavigate="Hyperlink_OnRequestNavigate">
+                            <TextBlock Text="{Binding Path=linkYT}"/>
+                            </Hyperlink>
+                            </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.SelectedItem>
