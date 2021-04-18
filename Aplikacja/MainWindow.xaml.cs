@@ -22,30 +22,56 @@ namespace Aplikacja
 
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Class representing the main application window 
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        /// <summary>
+        /// Makes context for the database
+        /// </summary>
         private DatebaseContext _context = new DatebaseContext();
 
-
+        /// <summary>
+        /// sets lastFocused listView to none of listView
+        /// </summary>
         private LastFocusedListView lastFocused = LastFocusedListView.None;
 
+        /// <summary>
+        /// Gets or sets AuthorViewSource
+        /// </summary>
         public CollectionViewSource AuthorsViewSource { get; private set; }
+
+
+        /// <summary>
+        /// Gets context for the database
+        /// </summary>
         public DatebaseContext Context { get => _context; }
 
+        /// <summary>
+        /// The class constructor.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// The class responsible for closing the program 
+        /// </summary>
+        /// <param name="e">Closing event. </param>
         protected override void OnClosing(CancelEventArgs e)
         {
             _context.Dispose();
             base.OnClosing(e);
         }
 
+
+        /// <summary>
+        /// Window loading method. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _context.Database.EnsureCreated();
@@ -55,6 +81,11 @@ namespace Aplikacja
             AuthorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
         }
 
+        /// <summary>
+        /// TU POWINIEN BYĆ OPIS 
+        /// </summary>
+        /// <param name="result">TU POWINIEN BYĆ OPIS </param>
+        /// <param name="dlg">TU POWINIEN BYĆ OPIS </param>
         private void processAddSongDialogResult(Nullable<bool> result, AddSongDialog dlg)
         {
             if (result == true)
@@ -64,6 +95,11 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// If the "Add" button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AddSongDialog(this);
@@ -72,6 +108,11 @@ namespace Aplikacja
             processAddSongDialogResult(dlg.ShowDialog(), dlg);
         }
 
+        /// <summary>
+        /// If the "Search in YT" button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_yt_Click(object sender, RoutedEventArgs e)
         {
             var youtubeDlg = new YouTubeSearch();
@@ -89,6 +130,11 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// If the "Remove" button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_remove_Click(object sender, RoutedEventArgs e)
         {
             if (lastFocused == LastFocusedListView.None)
@@ -112,11 +158,21 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// Method sets lastView 
+        /// </summary>
+        /// <param name="sender">  The source of the event. </param>
+        /// <param name="e"> An object that contains no event data.</param>
         private void AuthorsListView_GotFocus(object sender, RoutedEventArgs e)
         {
             lastFocused = LastFocusedListView.Authors;
         }
 
+        /// <summary>
+        ///  If the hyperlink is pressed then the method is executed.
+        /// </summary>
+        /// <param name="sender">  The source of the event. </param>
+        /// <param name="e"> An object that contains no event data.</param>
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var urlPart = ((Hyperlink)sender).NavigateUri;
@@ -126,11 +182,19 @@ namespace Aplikacja
         }
 
 
+        /// <summary>
+        /// Method sets lastView 
+        /// </summary>
+        /// <param name="sender">  The source of the event. </param>
+        /// <param name="e"> An object that contains no event data.</param>
         private void SongsListView_GotFocus(object sender, RoutedEventArgs e)
         {
             lastFocused = LastFocusedListView.Songs;
         }
 
+        /// <summary>
+        /// Method inits the database 
+        /// </summary>
         private void init_db()
         {
             var author1 = _context.Authors.Add(new Author() { Name = "John Doe" }).Entity;

@@ -15,16 +15,28 @@ using System.Windows.Shapes;
 
 namespace Aplikacja
 {
-
+    /// <summary>
+    /// Class responsible for validation the author's name 
+    /// </summary>
     public class AuthorNameValidation : ValidationRule
     {
         private MainWindow mainWindow;
 
+        /// <summary>
+        /// TU POWINIEN BYĆ OPIS 
+        /// </summary>
+        /// <param name="mainWindow"> The main window of the application </param>
         public AuthorNameValidation(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
 
+        /// <summary>
+        /// TU POWINIEN BYĆ OPIS 
+        /// </summary>
+        /// <param name="value"> TU POWINIEN BYĆ OPIS </param>
+        /// <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+        /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (String.IsNullOrEmpty((string) value))
@@ -48,8 +60,15 @@ namespace Aplikacja
     {
         private MainWindow mainWindow;
 
+        /// <summary>
+        /// Gets or sets author's name 
+        /// </summary>
         public String AuthorName { get; set; }
 
+        /// <summary>
+        /// Method adds a new author dialog
+        /// </summary>
+        /// <param name="mainWindow">The main window of the application</param>
         public AddAuthorDialog(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -60,6 +79,11 @@ namespace Aplikacja
             binding.ValidationRules.Add(validation);
         }
 
+        /// <summary>
+        /// If the "Add" button is pressed then the method is executed.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_add_Clicked(object sender, RoutedEventArgs e)
         {
             if (MyValidator.IsValid(this))

@@ -19,8 +19,17 @@ using System.Runtime.CompilerServices;
 
 namespace Aplikacja
 {
+    /// <summary>
+    /// Class checkes if directory is set
+    /// </summary>
     public class DirectoryIsSet : ValidationRule
     {
+        /// <summary>
+        /// TU POWINIEN BYÆ OPIS 
+        /// </summary>
+        /// <param name="value"> TU POWINIEN BYÆ OPIS </param>
+        /// <param name="cultureInfo">TU POWINIEN BYÆ OPIS </param>
+        /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (String.IsNullOrEmpty((string)value))
@@ -32,8 +41,17 @@ namespace Aplikacja
         }
     }
 
+    /// <summary>
+    /// Class checkes if title is set
+    /// </summary>
     public class TitleIsSet : ValidationRule
     {
+        /// <summary>
+        /// TU POWINIEN BYÆ OPIS 
+        /// </summary>
+        /// <param name="value"> TU POWINIEN BYÆ OPIS </param>
+        /// <param name="cultureInfo">TU POWINIEN BYÆ OPIS </param>
+        /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (String.IsNullOrEmpty((string)value))
@@ -56,7 +74,9 @@ namespace Aplikacja
         private CollectionViewSource authorsViewSource;
         private MainWindow mainWindow;
 
-
+        /// <summary>
+        /// TU POWINIEN BYÆ OPIS 
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -64,6 +84,9 @@ namespace Aplikacja
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Gets or sets author
+        /// </summary>
         public Author Author
         {
             get => this.author;
@@ -78,6 +101,9 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// Gets or sets song title 
+        /// </summary>
         public String SongTitle
         {
             get => this.songTitle;
@@ -92,6 +118,9 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// Gets or sets directory
+        /// </summary>
         public String Directory
         {
             get => this.directory;
@@ -106,6 +135,10 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// Method adds a new song dialog
+        /// </summary>
+        /// <param name="mainWindow">The main window of the application</param>
         public AddSongDialog(MainWindow mainWindow)
         {
             InitializeComponent();
@@ -113,12 +146,22 @@ namespace Aplikacja
             this.mainWindow = mainWindow;
         }
 
+        /// <summary>
+        /// Window loading method. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
             authorsViewSource.Source = mainWindow.AuthorsViewSource.Source;
         }
 
+        /// <summary>
+        /// If the "Choose..." button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void choose_button_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog();
@@ -132,6 +175,11 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// If the "Add" button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             if (MyValidator.IsValid(this))
@@ -140,6 +188,11 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// If the "Add" button is pressed then the method is executed. 
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_add_author_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AddAuthorDialog(this.mainWindow);

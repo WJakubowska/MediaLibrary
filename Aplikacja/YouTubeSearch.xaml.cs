@@ -21,8 +21,17 @@ using System.Windows.Navigation;
 
 namespace Aplikacja
 {
+    /// <summary>
+    /// Class representing selecting a video
+    /// </summary>
     public class VideoIsSelected : ValidationRule
     {
+        /// <summary>
+        /// TU POWINIEN BYĆ OPIS 
+        /// </summary>
+        /// <param name="value"> TU POWINIEN BYĆ OPIS </param>
+        /// <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+        /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (value == null)
@@ -35,33 +44,55 @@ namespace Aplikacja
     }
 
     /// <summary>
-    /// Logika interakcji dla klasy YouTubeSearch.xaml
+    /// The class responsible for connecting to the API YouTube
     /// </summary>
     public partial class YouTubeSearch : Window
     {
 
 
         private string searchTerm = "";
-    
 
+
+        /// <summary>
+        /// The class representing a video in YouTube
+        /// </summary>
         public class Videos 
         {
+            /// <summary>
+            /// Gets or sets the name of the video
+            /// </summary>
             public string name { get; set; }
+            /// <summary>
+            ///  Gets or sets the name of the video
+            /// </summary>
             public string linkYT { get; set; }
         }
 
+        /// <summary>
+        /// An object representing a video
+        /// </summary>
         public Videos Video { get; set; }
 
+        /// <summary>
+        /// An object representing a list of video as ObservableCollection 
+        /// </summary>
         private ObservableCollection<Videos> videos;
- 
 
 
-
+        /// <summary>
+        /// The class constructor.
+        /// </summary>
         public YouTubeSearch()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// If the "Search" button is pressed then the method is executed. The method starts search term on YouTube.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void button_search_Click(object sender, RoutedEventArgs e)
         {
 
@@ -88,7 +119,13 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        /// The method responsible for search term in YouTube.
+        /// </summary>
+        /// <param name="term"> The term we want to find in youtube  </param>
+        /// <returns> List of found videos  </returns>
         [STAThread]
+        
         public async Task Run(string term)
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -116,9 +153,11 @@ namespace Aplikacja
                 switch (searchResult.Id.Kind)
                 {
                     case "youtube#video":
-                        Videos video = new Videos();
-                        video.name = String.Format("{0}", searchResult.Snippet.Title);
-                        video.linkYT = String.Format("http://www.youtube.com/watch?v={0}", searchResult.Id.VideoId);
+                        Videos video = new()
+                        {
+                            name = String.Format("{0}", searchResult.Snippet.Title),
+                            linkYT = String.Format("http://www.youtube.com/watch?v={0}", searchResult.Id.VideoId)
+                        };
                         videos.Add(video);
                         break;
 
@@ -129,6 +168,11 @@ namespace Aplikacja
             SearchButton.IsEnabled = true;
         }
 
+        /// <summary>
+        /// If the "Add" button is pressed then the method is executed.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains no event data. </param>
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
             if (MyValidator.IsValid(this))
@@ -137,6 +181,11 @@ namespace Aplikacja
             }
         }
 
+        /// <summary>
+        ///  If the hyperlink is pressed then the method is executed.
+        /// </summary>
+        /// <param name="sender">  The source of the event. </param>
+        /// <param name="e"> An object that contains no event data.</param>
         private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             var urlPart = ((Hyperlink)sender).NavigateUri;

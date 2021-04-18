@@ -1,0 +1,571 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Aplikacja</name>
+    </assembly>
+    <members>
+        <member name="T:Aplikacja.AuthorNameValidation">
+            <summary>
+            Class responsible for validation the author's name 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.AuthorNameValidation.#ctor(Aplikacja.MainWindow)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="mainWindow"> The main window of the application </param>
+        </member>
+        <member name="M:Aplikacja.AuthorNameValidation.Validate(System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="value"> TU POWINIEN BYĆ OPIS </param>
+            <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+            <returns>The result of the validation </returns>
+        </member>
+        <member name="T:Aplikacja.AddAuthorDialog">
+            <summary>
+            Interaction logic for AddAuthorDialog.xaml
+            </summary>
+            <summary>
+            AddAuthorDialog
+            </summary>
+        </member>
+        <member name="P:Aplikacja.AddAuthorDialog.AuthorName">
+            <summary>
+            Gets or sets author's name 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.AddAuthorDialog.#ctor(Aplikacja.MainWindow)">
+            <summary>
+            Method adds a new author dialog
+            </summary>
+            <param name="mainWindow">The main window of the application</param>
+        </member>
+        <member name="M:Aplikacja.AddAuthorDialog.button_add_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Add" button is pressed then the method is executed.
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.AddAuthorDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Aplikacja.DirectoryIsSet">
+            <summary>
+            Class checkes if directory is set
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DirectoryIsSet.Validate(System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="value"> TU POWINIEN BYĆ OPIS </param>
+            <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+            <returns>The result of the validation </returns>
+        </member>
+        <member name="T:Aplikacja.TitleIsSet">
+            <summary>
+            Class checkes if title is set
+            </summary>
+        </member>
+        <member name="M:Aplikacja.TitleIsSet.Validate(System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="value"> TU POWINIEN BYĆ OPIS </param>
+            <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+            <returns>The result of the validation </returns>
+        </member>
+        <member name="T:Aplikacja.AddSongDialog">
+            <summary>
+            Interaction logic for AddSongDialog.xaml
+            </summary>
+            <summary>
+            AddSongDialog
+            </summary>
+        </member>
+        <member name="E:Aplikacja.AddSongDialog.PropertyChanged">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+        </member>
+        <member name="P:Aplikacja.AddSongDialog.Author">
+            <summary>
+            Gets or sets author
+            </summary>
+        </member>
+        <member name="P:Aplikacja.AddSongDialog.SongTitle">
+            <summary>
+            Gets or sets song title 
+            </summary>
+        </member>
+        <member name="P:Aplikacja.AddSongDialog.Directory">
+            <summary>
+            Gets or sets directory
+            </summary>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.#ctor(Aplikacja.MainWindow)">
+            <summary>
+            Method adds a new song dialog
+            </summary>
+            <param name="mainWindow">The main window of the application</param>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Window loading method. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.choose_button_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Choose..." button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.button_add_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Add" button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.button_add_author_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Add" button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.AddSongDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Aplikacja.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:Aplikacja.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:Aplikacja.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:Aplikacja.Author">
+            <summary>
+            Class representing data tables : author. 
+            Constains infomration about id and name. 
+            It is related to the class Song. 
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Author.AuthorId">
+            <summary>
+            Store for the AuthorId property
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Author.Name">
+            <summary>
+            Store for the Name property
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Author.Songs">
+            <summary>
+            List of object Song related to this class 
+            </summary>
+        </member>
+        <member name="T:Aplikacja.DatebaseContext">
+            <summary>
+            Class which is responsible for interacting with the entity model and the database.
+            </summary>
+        </member>
+        <member name="P:Aplikacja.DatebaseContext.Authors">
+            <summary>
+            Creates an instance of a DbSet called Authors
+            </summary>
+        </member>
+        <member name="P:Aplikacja.DatebaseContext.Songs">
+            <summary>
+            Creates an instance of a DbSet called Songs
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatebaseContext.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatebaseContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            This method configure the database to be used for this context
+            </summary>
+            <param name="optionsBuilder"> A builder used to create or modify options for this context </param>
+        </member>
+        <member name="M:Aplikacja.DatebaseContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            The method creates a base model 
+            </summary>
+            <param name="builder">The builder that defines the model for the context being created.</param>
+        </member>
+        <member name="T:Aplikacja.LastFocusedListView">
+            <summary>
+            List of last focused ListView
+            </summary>
+        </member>
+        <member name="F:Aplikacja.LastFocusedListView.None">
+            <summary>
+            None of ListView
+            </summary>
+        </member>
+        <member name="F:Aplikacja.LastFocusedListView.Authors">
+            <summary>
+            ListView of Authors
+            </summary>
+        </member>
+        <member name="F:Aplikacja.LastFocusedListView.Songs">
+            <summary>
+            ListView of Songs
+            </summary>
+        </member>
+        <member name="T:Aplikacja.ILastFocusedListViewDelegate">
+            <summary>
+            The ILastFacusedListViewDelegate interface
+            </summary>
+        </member>
+        <member name="P:Aplikacja.ILastFocusedListViewDelegate.Message">
+            <summary>
+            Gets the message 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.ILastFocusedListViewDelegate.DeleteRecord">
+            <summary>
+            Remove a record from the database
+            </summary>
+        </member>
+        <member name="T:Aplikacja.SongsLastFocused">
+            <summary>
+            Class representing the last song focused
+            </summary>
+        </member>
+        <member name="P:Aplikacja.SongsLastFocused.Message">
+            <summary>
+            Gets the message 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.SongsLastFocused.#ctor(Aplikacja.MainWindow)">
+            <summary>
+               TU POWINIEN BYĆ OPIS  
+            </summary>
+            <param name="mainWindow"> The main window of the application  </param>
+        </member>
+        <member name="M:Aplikacja.SongsLastFocused.DeleteRecord">
+            <summary>
+            Remove a song from the database
+            </summary>
+        </member>
+        <member name="T:Aplikacja.AuthorsLastFocused">
+            <summary>
+            Class representing the last author focused
+            </summary>
+        </member>
+        <member name="P:Aplikacja.AuthorsLastFocused.Message">
+            <summary>
+            Gets the message 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.AuthorsLastFocused.#ctor(Aplikacja.MainWindow)">
+            <summary>
+               TU POWINIEN BYĆ OPIS  
+            </summary>
+            <param name="mainWindow"> The main window of the application  </param>
+        </member>
+        <member name="M:Aplikacja.AuthorsLastFocused.DeleteRecord">
+            <summary>
+            Remove a author from the database
+            </summary>
+        </member>
+        <member name="T:Aplikacja.LastFocusedListViewFactory">
+            <summary>
+             Class representing the factory of last facused ListView
+            </summary> 
+        </member>
+        <member name="M:Aplikacja.LastFocusedListViewFactory.Create(Aplikacja.LastFocusedListView,Aplikacja.MainWindow)">
+            <summary>
+            The method creates a ILastFocusedListViewDelegate
+            </summary>
+            <param name="lastFocusedListView"> The last focused ListView </param>
+            <param name="mainWindow"> The main window of the application </param>
+            <returns> The listView focused </returns>
+        </member>
+        <member name="T:Aplikacja.MainWindow">
+            <summary>
+            Class representing the main application window 
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="F:Aplikacja.MainWindow._context">
+            <summary>
+            Makes context for the database
+            </summary>
+        </member>
+        <member name="F:Aplikacja.MainWindow.lastFocused">
+            <summary>
+            sets lastFocused listView to none of listView
+            </summary>
+        </member>
+        <member name="P:Aplikacja.MainWindow.AuthorsViewSource">
+            <summary>
+            Gets or sets AuthorViewSource
+            </summary>
+        </member>
+        <member name="P:Aplikacja.MainWindow.Context">
+            <summary>
+            Gets context for the database
+            </summary>
+        </member>
+        <member name="M:Aplikacja.MainWindow.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="M:Aplikacja.MainWindow.OnClosing(System.ComponentModel.CancelEventArgs)">
+            <summary>
+            The class responsible for closing the program 
+            </summary>
+            <param name="e">Closing event. </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Window loading method. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.processAddSongDialogResult(System.Nullable{System.Boolean},Aplikacja.AddSongDialog)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="result">TU POWINIEN BYĆ OPIS </param>
+            <param name="dlg">TU POWINIEN BYĆ OPIS </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.button_add_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Add" button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.button_yt_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Search in YT" button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.button_remove_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Remove" button is pressed then the method is executed. 
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.AuthorsListView_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method sets lastView 
+            </summary>
+            <param name="sender">  The source of the event. </param>
+            <param name="e"> An object that contains no event data.</param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.Hyperlink_OnRequestNavigate(System.Object,System.Windows.Navigation.RequestNavigateEventArgs)">
+            <summary>
+             If the hyperlink is pressed then the method is executed.
+            </summary>
+            <param name="sender">  The source of the event. </param>
+            <param name="e"> An object that contains no event data.</param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.SongsListView_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Method sets lastView 
+            </summary>
+            <param name="sender">  The source of the event. </param>
+            <param name="e"> An object that contains no event data.</param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.init_db">
+            <summary>
+            Method inits the database 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:Aplikacja.MyValidator">
+            <summary>
+            Class responsible for validation 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.MyValidator.IsValid(System.Windows.DependencyObject)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="node"> An object that participates in the dependency property system</param>
+            <returns>The result of validation : true or false</returns>
+        </member>
+        <member name="T:Aplikacja.Song">
+            <summary>
+            Class representing data tables : Song. 
+            Constains infomration about id, title, directory and author. 
+            It is related to the class Author. 
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Song.SongId">
+            <summary>
+            Store for the SongId property. This field is required.
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Song.Title">
+            <summary>
+            Store for the Title property. The maximum length of a title is 100 characters
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Song.Directory">
+            <summary>
+            Store for the Directory property
+            </summary>
+        </member>
+        <member name="P:Aplikacja.Song.Author">
+            <summary>
+            Store for the Author property. This field is required.
+            </summary>
+        </member>
+        <member name="T:Aplikacja.VideoIsSelected">
+            <summary>
+            Class representing selecting a video
+            </summary>
+        </member>
+        <member name="M:Aplikacja.VideoIsSelected.Validate(System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            TU POWINIEN BYĆ OPIS 
+            </summary>
+            <param name="value"> TU POWINIEN BYĆ OPIS </param>
+            <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+            <returns>The result of the validation </returns>
+        </member>
+        <member name="T:Aplikacja.YouTubeSearch">
+            <summary>
+            The class responsible for connecting to the API YouTube
+            </summary>
+            <summary>
+            YouTubeSearch
+            </summary>
+        </member>
+        <member name="T:Aplikacja.YouTubeSearch.Videos">
+            <summary>
+            The class representing a video in YouTube
+            </summary>
+        </member>
+        <member name="P:Aplikacja.YouTubeSearch.Videos.name">
+            <summary>
+            Gets or sets the name of the video
+            </summary>
+        </member>
+        <member name="P:Aplikacja.YouTubeSearch.Videos.linkYT">
+            <summary>
+             Gets or sets the name of the video
+            </summary>
+        </member>
+        <member name="P:Aplikacja.YouTubeSearch.Video">
+            <summary>
+            An object representing a video
+            </summary>
+        </member>
+        <member name="F:Aplikacja.YouTubeSearch.videos">
+            <summary>
+            An object representing a list of video as ObservableCollection 
+            </summary>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.#ctor">
+            <summary>
+            The class constructor.
+            </summary>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.button_search_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Search" button is pressed then the method is executed. The method starts search term on YouTube.
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.Run(System.String)">
+            <summary>
+            The method responsible for search term in YouTube.
+            </summary>
+            <param name="term"> The term we want to find in youtube  </param>
+            <returns> List of found videos  </returns>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.Add_Button_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            If the "Add" button is pressed then the method is executed.
+            </summary>
+            <param name="sender"> The source of the event. </param>
+            <param name="e"> An object that contains no event data. </param>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.Hyperlink_OnRequestNavigate(System.Object,System.Windows.Navigation.RequestNavigateEventArgs)">
+            <summary>
+             If the hyperlink is pressed then the method is executed.
+            </summary>
+            <param name="sender">  The source of the event. </param>
+            <param name="e"> An object that contains no event data.</param>
+        </member>
+        <member name="M:Aplikacja.YouTubeSearch.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>
