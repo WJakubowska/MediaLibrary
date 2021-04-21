@@ -10,9 +10,9 @@ using System.Collections.ObjectModel;
 namespace Aplikacja
 {
     /// <summary>
-    /// Class representing data tables : author. 
-    /// Constains infomration about id and name. 
-    /// It is related to the class Song. 
+    /// Class representing data tables : author.
+    /// Contains information about id and name.
+    /// It is related to the class Song.
     /// </summary>
     public class Author
     {
@@ -30,7 +30,7 @@ namespace Aplikacja
         public string Name { get; set; }
 
         ///<summary>
-        ///List of object Song related to this class 
+        ///List of object Song related to this class
         ///</summary>
         public virtual ObservableCollection<Song> Songs { get; set; } = new ObservableCollection<Song>();
     }

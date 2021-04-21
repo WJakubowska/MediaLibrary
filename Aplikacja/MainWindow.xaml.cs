@@ -19,33 +19,51 @@ using System.Diagnostics;
 
 namespace Aplikacja
 {
+    /// <summary>
+    /// Interface for main window
+    /// </summary>
+    public interface IMainWindow
+    {
+        /// <summary>
+        /// Checks if Author name is already in database
+        /// </summary>
+        bool IsAuthorInDb(string authorName);
+    }
 
 
     /// <summary>
-    /// Class representing the main application window 
+    /// Class representing the main application window
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IMainWindow
     {
         /// <summary>
-        /// Makes context for the database
+        /// Database context
         /// </summary>
         private DatebaseContext _context = new DatebaseContext();
 
         /// <summary>
-        /// sets lastFocused listView to none of listView
+        /// Last focused list view
         /// </summary>
         private LastFocusedListView lastFocused = LastFocusedListView.None;
 
         /// <summary>
-        /// Gets or sets AuthorViewSource
+        /// CollectionViewSource bound to Authors list.
         /// </summary>
         public CollectionViewSource AuthorsViewSource { get; private set; }
 
 
         /// <summary>
-        /// Gets context for the database
+        /// Public getter for database context
         /// </summary>
         public DatebaseContext Context { get => _context; }
+
+        /// <summary>
+        /// Checks if Author name is already in database
+        /// </summary>
+        public bool IsAuthorInDb(string authorName)
+        {
+            return this._context.Authors.Where(a => a.Name == authorName).Count() != 0;
+        }
 
         /// <summary>
         /// The class constructor.
@@ -57,7 +75,9 @@ namespace Aplikacja
 
 
         /// <summary>
-        /// The class responsible for closing the program 
+        /// Close window callback.
+        ///
+        /// This method is responsible for disposing of database context.
         /// </summary>
         /// <param name="e">Closing event. </param>
         protected override void OnClosing(CancelEventArgs e)
@@ -68,7 +88,7 @@ namespace Aplikacja
 
 
         /// <summary>
-        /// Window loading method. 
+        /// Callback for loaded window.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
         /// <param name="e"> An object that contains no event data. </param>
@@ -82,10 +102,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// TU POWINIEN BYĆ OPIS 
+        /// Method processes result of AddSongDialog
         /// </summary>
-        /// <param name="result">TU POWINIEN BYĆ OPIS </param>
-        /// <param name="dlg">TU POWINIEN BYĆ OPIS </param>
+        /// <param name="result"> Result of AddSongDialog.ShowDialog() call</param>
+        /// <param name="dlg">AddSongDialog that was called</param>
         private void processAddSongDialogResult(Nullable<bool> result, AddSongDialog dlg)
         {
             if (result == true)
@@ -96,10 +116,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Add" button is pressed then the method is executed. 
+        /// Callback for the "Add" button
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AddSongDialog(this);
@@ -109,10 +129,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Search in YT" button is pressed then the method is executed. 
+        /// Callback for "YT Search" button
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_yt_Click(object sender, RoutedEventArgs e)
         {
             var youtubeDlg = new YouTubeSearch();
@@ -131,10 +151,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Remove" button is pressed then the method is executed. 
+        /// Callback for "Remove" button
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_remove_Click(object sender, RoutedEventArgs e)
         {
             if (lastFocused == LastFocusedListView.None)
@@ -159,10 +179,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// Method sets lastView 
+        /// Callback for focusing ListView of Authors
         /// </summary>
         /// <param name="sender">  The source of the event. </param>
-        /// <param name="e"> An object that contains no event data.</param>
+        /// <param name="e"> An object that contains event data.</param>
         private void AuthorsListView_GotFocus(object sender, RoutedEventArgs e)
         {
             lastFocused = LastFocusedListView.Authors;
@@ -183,33 +203,13 @@ namespace Aplikacja
 
 
         /// <summary>
-        /// Method sets lastView 
+        /// Callback for focusing ListView of Songs
         /// </summary>
         /// <param name="sender">  The source of the event. </param>
         /// <param name="e"> An object that contains no event data.</param>
         private void SongsListView_GotFocus(object sender, RoutedEventArgs e)
         {
             lastFocused = LastFocusedListView.Songs;
-        }
-
-        /// <summary>
-        /// Method inits the database 
-        /// </summary>
-        private void init_db()
-        {
-            var author1 = _context.Authors.Add(new Author() { Name = "John Doe" }).Entity;
-            var author2 = _context.Authors.Add(new Author() { Name = "Yeah Yeah Yeahs" }).Entity;
-
-
-            string[] titles = new string[] { "lofi chill", "generic pop song title", "общее название популярной песни # 2" };
-            foreach (var title in titles)
-            {
-                _context.Songs.Add(new Song() { Title = title, Directory = "Z:/path/to/song", Author = author1 });
-            }
-
-            _context.Songs.Add(new Song() { Title = "head will roll", Directory = "ttps://www.youtube.com/watch?v=m9k7WgIPK14", Author = author2 });
-
-            _context.SaveChanges();
         }
     }
 }

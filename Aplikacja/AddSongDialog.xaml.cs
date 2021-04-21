@@ -20,15 +20,15 @@ using System.Runtime.CompilerServices;
 namespace Aplikacja
 {
     /// <summary>
-    /// Class checkes if directory is set
+    /// Class validating directory passed by user
     /// </summary>
     public class DirectoryIsSet : ValidationRule
     {
         /// <summary>
-        /// TU POWINIEN BYÆ OPIS 
+        /// This validates directory string as passed by the user.
         /// </summary>
-        /// <param name="value"> TU POWINIEN BYÆ OPIS </param>
-        /// <param name="cultureInfo">TU POWINIEN BYÆ OPIS </param>
+        /// <param name="value"> Directory string </param>
+        /// <param name="cultureInfo"></param>
         /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -42,15 +42,15 @@ namespace Aplikacja
     }
 
     /// <summary>
-    /// Class checkes if title is set
+    /// Class validating title passed by user
     /// </summary>
     public class TitleIsSet : ValidationRule
     {
         /// <summary>
-        /// TU POWINIEN BYÆ OPIS 
+        /// This validates title string as passed by the user.
         /// </summary>
-        /// <param name="value"> TU POWINIEN BYÆ OPIS </param>
-        /// <param name="cultureInfo">TU POWINIEN BYÆ OPIS </param>
+        /// <param name="value"> Title string </param>
+        /// <param name="cultureInfo"></param>
         /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -75,7 +75,7 @@ namespace Aplikacja
         private MainWindow mainWindow;
 
         /// <summary>
-        /// TU POWINIEN BYÆ OPIS 
+        /// Event emitted when property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -102,7 +102,7 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// Gets or sets song title 
+        /// Gets or sets song title
         /// </summary>
         public String SongTitle
         {
@@ -147,10 +147,12 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// Window loading method. 
+        /// Method called upon complete load of a dialog.
+        ///
+        /// Links Authors from mainWindow into own CollectionViewSource.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             authorsViewSource = (CollectionViewSource)FindResource(nameof(authorsViewSource));
@@ -158,10 +160,10 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Choose..." button is pressed then the method is executed. 
+        /// Directory dialog callback.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void choose_button_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new Microsoft.Win32.OpenFileDialog();
@@ -176,10 +178,12 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Add" button is pressed then the method is executed. 
+        /// Add button callback.
+        ///
+        /// If all validations have passed, this ends the dialog.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
             if (MyValidator.IsValid(this))
@@ -189,10 +193,12 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// If the "Add" button is pressed then the method is executed. 
+        /// Add author button callback.
+        ///
+        /// This launches new dialog that can be used to add an Author to database.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_add_author_Click(object sender, RoutedEventArgs e)
         {
             var dlg = new AddAuthorDialog(this.mainWindow);

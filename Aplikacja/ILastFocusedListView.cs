@@ -11,7 +11,7 @@ namespace Aplikacja
 {
 
     /// <summary>
-    /// List of last focused ListView
+    /// Enum signifying last focuse list view in the main window of an app.
     /// </summary>
     public enum LastFocusedListView
     {
@@ -32,22 +32,23 @@ namespace Aplikacja
 
 
     /// <summary>
-    /// The ILastFacusedListViewDelegate interface
+    /// Interface abstracting common processes related to
+    /// removing Author or Song object from database.
     /// </summary>
     public interface ILastFocusedListViewDelegate
     {
         /// <summary>
-        /// Gets the message 
+        /// Message that is shown to user upon removing Song/Author.
         /// </summary>
         string Message { get; }
         /// <summary>
-        /// Remove a record from the database
+        /// Removes Song or Record from database.
         /// </summary>
         void DeleteRecord();
     }
 
     /// <summary>
-    /// Class representing the last song focused
+    /// Class representing the last focused song.
     /// </summary>
     public class SongsLastFocused : ILastFocusedListViewDelegate
     {
@@ -55,7 +56,7 @@ namespace Aplikacja
 
 
         /// <summary>
-        /// Gets the message 
+        /// Message shown to user.
         /// </summary>
         public string Message
         {
@@ -68,7 +69,7 @@ namespace Aplikacja
 
 
         /// <summary>
-        ///    TU POWINIEN BYĆ OPIS  
+        /// Ctor of SongsLastFocused.
         /// </summary>
         /// <param name="mainWindow"> The main window of the application  </param>
         public SongsLastFocused(MainWindow mainWindow)
@@ -77,7 +78,7 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// Remove a song from the database
+        /// Removes last focused song from database.
         /// </summary>
         public void DeleteRecord()
         {
@@ -88,14 +89,14 @@ namespace Aplikacja
 
 
     /// <summary>
-    /// Class representing the last author focused
+    /// Class representing the last focused author
     /// </summary>
     public class AuthorsLastFocused : ILastFocusedListViewDelegate
     {
         private MainWindow mainWindow;
 
         /// <summary>
-        /// Gets the message 
+        /// Message shown to user.
         /// </summary>
         public string Message
         {
@@ -107,7 +108,7 @@ namespace Aplikacja
         }
 
         /// <summary>
-        ///    TU POWINIEN BYĆ OPIS  
+        /// Ctor of AuthorsLastFocused
         /// </summary>
         /// <param name="mainWindow"> The main window of the application  </param>
         public AuthorsLastFocused(MainWindow mainWindow)
@@ -116,7 +117,7 @@ namespace Aplikacja
         }
 
         /// <summary>
-        /// Remove a author from the database
+        /// Removes an author from the database
         /// </summary>
         public void DeleteRecord()
         {
@@ -126,8 +127,8 @@ namespace Aplikacja
     }
 
     /// <summary>
-    ///  Class representing the factory of last facused ListView
-    /// </summary> 
+    /// Factory for ILastFocusedListViewDelegate objects
+    /// </summary>
     public class LastFocusedListViewFactory
     {
         /// <summary>

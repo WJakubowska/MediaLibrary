@@ -22,15 +22,15 @@ using System.Windows.Navigation;
 namespace Aplikacja
 {
     /// <summary>
-    /// Class representing selecting a video
+    /// Class validating that any youtube video is selected
     /// </summary>
     public class VideoIsSelected : ValidationRule
     {
         /// <summary>
-        /// TU POWINIEN BYĆ OPIS 
+        /// Validate selection
         /// </summary>
-        /// <param name="value"> TU POWINIEN BYĆ OPIS </param>
-        /// <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+        /// <param name="value"> Reference of selected object </param>
+        /// <param name="cultureInfo"></param>
         /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -56,7 +56,7 @@ namespace Aplikacja
         /// <summary>
         /// The class representing a video in YouTube
         /// </summary>
-        public class Videos 
+        public class Videos
         {
             /// <summary>
             /// Gets or sets the name of the video
@@ -74,7 +74,7 @@ namespace Aplikacja
         public Videos Video { get; set; }
 
         /// <summary>
-        /// An object representing a list of video as ObservableCollection 
+        /// An object representing a list of video as ObservableCollection
         /// </summary>
         private ObservableCollection<Videos> videos;
 
@@ -125,7 +125,7 @@ namespace Aplikacja
         /// <param name="term"> The term we want to find in youtube  </param>
         /// <returns> List of found videos  </returns>
         [STAThread]
-        
+
         public async Task Run(string term)
         {
             var youtubeService = new YouTubeService(new BaseClientService.Initializer()
@@ -137,7 +137,7 @@ namespace Aplikacja
             SearchButton.IsEnabled = false;
 
             var searchListRequest = youtubeService.Search.List("snippet");
-            searchListRequest.Q = term; 
+            searchListRequest.Q = term;
             searchListRequest.MaxResults = 10;
 
             // Call the search.list method to retrieve results matching the specified query term.

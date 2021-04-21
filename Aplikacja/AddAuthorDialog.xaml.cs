@@ -16,57 +16,69 @@ using System.Windows.Shapes;
 namespace Aplikacja
 {
     /// <summary>
-    /// Class responsible for validation the author's name 
+    /// Class validating directory passed by user
     /// </summary>
     public class AuthorNameValidation : ValidationRule
     {
-        private MainWindow mainWindow;
+        private IMainWindow mainWindow;
 
         /// <summary>
-        /// TU POWINIEN BYĆ OPIS 
+        /// Ctor of AuthorNameValidation
         /// </summary>
         /// <param name="mainWindow"> The main window of the application </param>
-        public AuthorNameValidation(MainWindow mainWindow)
+        public AuthorNameValidation(IMainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
 
         /// <summary>
-        /// TU POWINIEN BYĆ OPIS 
+        /// This validates name of an author as passed from the user.
         /// </summary>
-        /// <param name="value"> TU POWINIEN BYĆ OPIS </param>
-        /// <param name="cultureInfo">TU POWINIEN BYĆ OPIS </param>
+        /// <param name="value"> This is value of  </param>
+        /// <param name="cultureInfo">  </param>
         /// <returns>The result of the validation </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (String.IsNullOrEmpty((string) value))
+            string value_string = value as string;
+
+            if (value_string == null)
+            {
+                return new ValidationResult(false, "Author name not a string");
+            }
+
+            if (String.IsNullOrEmpty(value_string))
             {
                 return new ValidationResult(false, "Author name can not be empty");
             }
 
-            if (mainWindow.Context.Authors.Where(a => a.Name == (string)value).Count() != 0)
+            if (mainWindow.IsAuthorInDb(value_string))
             {
                 return new ValidationResult(false, "Author already in a database");
             }
 
-            return new ValidationResult(true, null);
+            if (value_string.Length < 3)
+            {
+                return new ValidationResult(false, "Author name can't be less than 3 char");
+            }
+
+            return ValidationResult.ValidResult;
         }
     }
 
     /// <summary>
-    /// Interaction logic for AddAuthorDialog.xaml
+    /// Interaction logic for AddAuthorDialog
     /// </summary>
     public partial class AddAuthorDialog : Window
     {
         private MainWindow mainWindow;
 
         /// <summary>
-        /// Gets or sets author's name 
+        /// Gets or sets author's name
         /// </summary>
         public String AuthorName { get; set; }
 
         /// <summary>
-        /// Method adds a new author dialog
+        /// Ctor of AddAuthorDialog
         /// </summary>
         /// <param name="mainWindow">The main window of the application</param>
         public AddAuthorDialog(MainWindow mainWindow)
@@ -83,7 +95,7 @@ namespace Aplikacja
         /// If the "Add" button is pressed then the method is executed.
         /// </summary>
         /// <param name="sender"> The source of the event. </param>
-        /// <param name="e"> An object that contains no event data. </param>
+        /// <param name="e"> An object that contains event data. </param>
         private void button_add_Clicked(object sender, RoutedEventArgs e)
         {
             if (MyValidator.IsValid(this))

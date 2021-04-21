@@ -10,15 +10,15 @@ using System.Windows.Input;
 namespace Aplikacja
 {
     /// <summary>
-    /// Class responsible for validation 
+    /// Class for generalizing processing validator
     /// </summary>
     public class MyValidator
     {
         /// <summary>
-        /// TU POWINIEN BYĆ OPIS 
+        /// Checks all validators for an DependencyObject
         /// </summary>
         /// <param name="node"> An object that participates in the dependency property system</param>
-        /// <returns>The result of validation : true or false</returns>
+        /// <returns>The result of validation</returns>
         public static bool IsValid(DependencyObject node)
         {
             if (node != null)
