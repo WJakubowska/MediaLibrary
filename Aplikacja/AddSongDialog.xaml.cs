@@ -73,6 +73,7 @@ namespace Aplikacja
         private String directory = String.Empty;
         private CollectionViewSource authorsViewSource;
         private MainWindow mainWindow;
+        private DatabaseService service;
 
         /// <summary>
         /// Event emitted when property has changed
@@ -139,11 +140,13 @@ namespace Aplikacja
         /// Method adds a new song dialog
         /// </summary>
         /// <param name="mainWindow">The main window of the application</param>
-        public AddSongDialog(MainWindow mainWindow)
+        /// <param name="service">The main window of the application</param>
+        public AddSongDialog(MainWindow mainWindow, DatabaseService service)
         {
             InitializeComponent();
 
             this.mainWindow = mainWindow;
+            this.service = service;
         }
 
         /// <summary>
@@ -201,14 +204,14 @@ namespace Aplikacja
         /// <param name="e"> An object that contains event data. </param>
         private void button_add_author_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new AddAuthorDialog(this.mainWindow);
+            var dlg = new AddAuthorDialog(this.mainWindow, service);
             dlg.Owner = this;
             Nullable<bool> result = dlg.ShowDialog();
 
             if (result == true)
             {
                 var new_author = new Author() { Name = dlg.AuthorName };
-                mainWindow.Context.Authors.Add(new_author);
+                service.AddAuthor(new_author);
                 combox_authors.SelectedItem = new_author;
             }
         }

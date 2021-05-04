@@ -7,27 +7,27 @@ namespace Aplikacja.Tests
     [TestFixture]
     public class AddAuthorDialogShould
     {
-        public class MainWindowMock : IMainWindow
+        public class AuthorUniquenessCheckerMock : IAuthorUniquenessChecker
         {
             public List<string> AuthorsInDb { get; set; }
 
-            public MainWindowMock(List<string> authors)
+            public AuthorUniquenessCheckerMock(List<string> authors)
             {
                 AuthorsInDb = authors;
             }
 
-            public bool IsAuthorInDb(string authorName)
+            public bool IsAuthorNameUnique(string authorName)
             {
-                return AuthorsInDb.Contains(authorName);
+                return !AuthorsInDb.Contains(authorName);
             }
         }
 
-        MainWindowMock mainWindow;
+        AuthorUniquenessCheckerMock authorUniquenessCheckerMock;
 
         [SetUp]
         public void Init()
         {
-            mainWindow = new MainWindowMock(new List<string>(){"author1"});
+            authorUniquenessCheckerMock = new AuthorUniquenessCheckerMock(new List<string>(){"author1"});
         }
 
         [TestCase(null)]
@@ -37,7 +37,7 @@ namespace Aplikacja.Tests
         [TestCase("fo")]
         public void AuthorNameValidation_ShouldReturnFalse_ForNotValidInputs(object data)
         {
-            var sut = new AuthorNameValidation(mainWindow);
+            var sut = new AuthorNameValidation(authorUniquenessCheckerMock);
             var result = sut.Validate(data, null);
             Assert.IsFalse(result.IsValid);
         }
@@ -46,7 +46,7 @@ namespace Aplikacja.Tests
         [TestCase("example authors name")]
         public void AuthorNameValidation_ShouldReturnTrue_ForValidInput(object data)
         {
-            var sut = new AuthorNameValidation(mainWindow);
+            var sut = new AuthorNameValidation(authorUniquenessCheckerMock);
             var result = sut.Validate(data, null);
             Assert.IsTrue(result.IsValid);
         }

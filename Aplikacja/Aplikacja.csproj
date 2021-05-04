@@ -9,7 +9,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <!--<DocumentationFile>Aplikacja.xml</DocumentationFile>-->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <DocumentationFile>C:\Users\48783\Desktop\Studia\.NET i JAVA\.NET\MediaLibrary\Aplikacja\Aplikacja.xml</DocumentationFile>
+    <DocumentationFile>./Aplikacja.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

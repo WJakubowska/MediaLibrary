@@ -19,27 +19,18 @@ using System.Diagnostics;
 
 namespace Aplikacja
 {
-    /// <summary>
-    /// Interface for main window
-    /// </summary>
-    public interface IMainWindow
-    {
-        /// <summary>
-        /// Checks if Author name is already in database
-        /// </summary>
-        bool IsAuthorInDb(string authorName);
-    }
+
 
 
     /// <summary>
     /// Class representing the main application window
     /// </summary>
-    public partial class MainWindow : Window, IMainWindow
+    public partial class MainWindow : Window
     {
         /// <summary>
-        /// Database context
+        /// Object for accessing the database
         /// </summary>
-        private DatebaseContext _context = new DatebaseContext();
+        private DatabaseService _service = new DatabaseService();
 
         /// <summary>
         /// Last focused list view
@@ -51,19 +42,6 @@ namespace Aplikacja
         /// </summary>
         public CollectionViewSource AuthorsViewSource { get; private set; }
 
-
-        /// <summary>
-        /// Public getter for database context
-        /// </summary>
-        public DatebaseContext Context { get => _context; }
-
-        /// <summary>
-        /// Checks if Author name is already in database
-        /// </summary>
-        public bool IsAuthorInDb(string authorName)
-        {
-            return this._context.Authors.Where(a => a.Name == authorName).Count() != 0;
-        }
 
         /// <summary>
         /// The class constructor.
@@ -82,7 +60,7 @@ namespace Aplikacja
         /// <param name="e">Closing event. </param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            _context.Dispose();
+            _service.Dispose();
             base.OnClosing(e);
         }
 
@@ -94,15 +72,13 @@ namespace Aplikacja
         /// <param name="e"> An object that contains no event data. </param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _context.Database.EnsureCreated();
-            _context.Authors.Load();
-            _context.Songs.Load();
+            _service.PreloadEntities();
             AuthorsViewSource = (CollectionViewSource)FindResource(nameof(AuthorsViewSource));
-            AuthorsViewSource.Source = _context.Authors.Local.ToObservableCollection();
+            AuthorsViewSource.Source = _service.AuthorsAsObservable();
         }
 
         /// <summary>
-        /// Method processes result of AddSongDialog
+        /// Method that processes result of AddSongDialog
         /// </summary>
         /// <param name="result"> Result of AddSongDialog.ShowDialog() call</param>
         /// <param name="dlg">AddSongDialog that was called</param>
@@ -110,8 +86,8 @@ namespace Aplikacja
         {
             if (result == true)
             {
-                _context.Songs.Add(new Song() { Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
-                _context.SaveChanges();
+                _service.AddSong(new Song() { Title = dlg.SongTitle, Directory = dlg.Directory, Author = dlg.Author });
+                _service.Commit();
             }
         }
 
@@ -122,7 +98,7 @@ namespace Aplikacja
         /// <param name="e"> An object that contains event data. </param>
         private void button_add_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new AddSongDialog(this);
+            var dlg = new AddSongDialog(this, _service);
             dlg.Owner = this;
 
             processAddSongDialogResult(dlg.ShowDialog(), dlg);
@@ -141,7 +117,7 @@ namespace Aplikacja
 
             if (result == true)
             {
-                var addSongDlg = new AddSongDialog(this);
+                var addSongDlg = new AddSongDialog(this, _service);
                 addSongDlg.Owner = this;
                 addSongDlg.SongTitle = youtubeDlg.Video.name;
                 addSongDlg.Directory = youtubeDlg.Video.linkYT;
@@ -162,7 +138,7 @@ namespace Aplikacja
                 return;
             }
 
-            var lastFocusedListViewDelegate = LastFocusedListViewFactory.Create(lastFocused, this);
+            var lastFocusedListViewDelegate = LastFocusedListViewFactory.Create(lastFocused, this, _service);
 
             string messageBoxText = lastFocusedListViewDelegate.Message;
             string caption = "Aplikacja";
@@ -174,19 +150,10 @@ namespace Aplikacja
             if (result == MessageBoxResult.Yes)
             {
                 lastFocusedListViewDelegate.DeleteRecord();
-                _context.SaveChanges();
+                _service.Commit();
             }
         }
 
-        /// <summary>
-        /// Callback for focusing ListView of Authors
-        /// </summary>
-        /// <param name="sender">  The source of the event. </param>
-        /// <param name="e"> An object that contains event data.</param>
-        private void AuthorsListView_GotFocus(object sender, RoutedEventArgs e)
-        {
-            lastFocused = LastFocusedListView.Authors;
-        }
 
         /// <summary>
         ///  If the hyperlink is pressed then the method is executed.
@@ -201,6 +168,16 @@ namespace Aplikacja
             e.Handled = true;
         }
 
+
+        /// <summary>
+        /// Callback for focusing ListView of Authors
+        /// </summary>
+        /// <param name="sender">  The source of the event. </param>
+        /// <param name="e"> An object that contains event data.</param>
+        private void AuthorsListView_GotFocus(object sender, RoutedEventArgs e)
+        {
+            lastFocused = LastFocusedListView.Authors;
+        }
 
         /// <summary>
         /// Callback for focusing ListView of Songs

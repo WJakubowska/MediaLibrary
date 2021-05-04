@@ -52,7 +52,8 @@ namespace Aplikacja
     /// </summary>
     public class SongsLastFocused : ILastFocusedListViewDelegate
     {
-        private MainWindow mainWindow;
+        private MainWindow _mainWindow;
+        private DatabaseService _service;
 
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace Aplikacja
         {
             get
             {
-                var song = (Song)mainWindow.SongsListView.SelectedItem;
+                var song = (Song)_mainWindow.SongsListView.SelectedItem;
                 return $"Are you sure you want to delete song: {song.Title}";
             }
         }
@@ -72,9 +73,11 @@ namespace Aplikacja
         /// Ctor of SongsLastFocused.
         /// </summary>
         /// <param name="mainWindow"> The main window of the application  </param>
-        public SongsLastFocused(MainWindow mainWindow)
+        /// <param name="service"> Object for accessing database </param>
+        public SongsLastFocused(MainWindow mainWindow, DatabaseService service)
         {
-            this.mainWindow = mainWindow;
+            this._mainWindow = mainWindow;
+            this._service = service;
         }
 
         /// <summary>
@@ -82,8 +85,8 @@ namespace Aplikacja
         /// </summary>
         public void DeleteRecord()
         {
-            var song = (Song)mainWindow.SongsListView.SelectedItem;
-            mainWindow.Context.Songs.Remove(song);
+            var song = (Song)_mainWindow.SongsListView.SelectedItem;
+            _service.RemoveSong(song);
         }
     }
 
@@ -93,7 +96,8 @@ namespace Aplikacja
     /// </summary>
     public class AuthorsLastFocused : ILastFocusedListViewDelegate
     {
-        private MainWindow mainWindow;
+        private MainWindow _mainWindow;
+        private DatabaseService _service;
 
         /// <summary>
         /// Message shown to user.
@@ -102,7 +106,7 @@ namespace Aplikacja
         {
             get
             {
-                var author = (Author)mainWindow.AuthorsListView.SelectedItem;
+                var author = (Author)_mainWindow.AuthorsListView.SelectedItem;
                 return $"Are you sure you want to delete author: {author.Name} + every song assigned to author?";
             }
         }
@@ -111,9 +115,10 @@ namespace Aplikacja
         /// Ctor of AuthorsLastFocused
         /// </summary>
         /// <param name="mainWindow"> The main window of the application  </param>
-        public AuthorsLastFocused(MainWindow mainWindow)
+        public AuthorsLastFocused(MainWindow mainWindow, DatabaseService service)
         {
-            this.mainWindow = mainWindow;
+            this._mainWindow = mainWindow;
+            this._service = service;
         }
 
         /// <summary>
@@ -121,8 +126,8 @@ namespace Aplikacja
         /// </summary>
         public void DeleteRecord()
         {
-            var author = (Author)mainWindow.AuthorsListView.SelectedItem;
-            mainWindow.Context.Authors.Remove(author);
+            var author = (Author)_mainWindow.AuthorsListView.SelectedItem;
+            _service.RemoveAuthor(author);
         }
     }
 
@@ -137,14 +142,14 @@ namespace Aplikacja
         /// <param name="lastFocusedListView"> The last focused ListView </param>
         /// <param name="mainWindow"> The main window of the application </param>
         /// <returns> The listView focused </returns>
-        public static ILastFocusedListViewDelegate Create(LastFocusedListView lastFocusedListView, MainWindow mainWindow)
+        public static ILastFocusedListViewDelegate Create(LastFocusedListView lastFocusedListView, MainWindow mainWindow, DatabaseService service)
         {
             switch (lastFocusedListView)
             {
                 case LastFocusedListView.Authors:
-                    return new AuthorsLastFocused(mainWindow);
+                    return new AuthorsLastFocused(mainWindow, service);
                 case LastFocusedListView.Songs:
-                    return new SongsLastFocused(mainWindow);
+                    return new SongsLastFocused(mainWindow, service);
                 default:
                     break;
             }

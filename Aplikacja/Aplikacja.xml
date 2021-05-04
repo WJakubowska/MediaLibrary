@@ -9,11 +9,11 @@
             Class validating directory passed by user
             </summary>
         </member>
-        <member name="M:Aplikacja.AuthorNameValidation.#ctor(Aplikacja.IMainWindow)">
+        <member name="M:Aplikacja.AuthorNameValidation.#ctor(Aplikacja.IAuthorUniquenessChecker)">
             <summary>
             Ctor of AuthorNameValidation
             </summary>
-            <param name="mainWindow"> The main window of the application </param>
+            <param name="authorUniquenessChecker"> Object that lets us check if author name is unique </param>
         </member>
         <member name="M:Aplikacja.AuthorNameValidation.Validate(System.Object,System.Globalization.CultureInfo)">
             <summary>
@@ -36,11 +36,12 @@
             Gets or sets author's name
             </summary>
         </member>
-        <member name="M:Aplikacja.AddAuthorDialog.#ctor(Aplikacja.MainWindow)">
+        <member name="M:Aplikacja.AddAuthorDialog.#ctor(Aplikacja.MainWindow,Aplikacja.IAuthorUniquenessChecker)">
             <summary>
             Ctor of AddAuthorDialog
             </summary>
             <param name="mainWindow">The main window of the application</param>
+            <param name="authorUniquenessChecker">Object for checking author name uniqueness</param>
         </member>
         <member name="M:Aplikacja.AddAuthorDialog.button_add_Clicked(System.Object,System.Windows.RoutedEventArgs)">
             <summary>
@@ -108,11 +109,12 @@
             Gets or sets directory
             </summary>
         </member>
-        <member name="M:Aplikacja.AddSongDialog.#ctor(Aplikacja.MainWindow)">
+        <member name="M:Aplikacja.AddSongDialog.#ctor(Aplikacja.MainWindow,Aplikacja.DatabaseService)">
             <summary>
             Method adds a new song dialog
             </summary>
             <param name="mainWindow">The main window of the application</param>
+            <param name="service">The main window of the application</param>
         </member>
         <member name="M:Aplikacja.AddSongDialog.Window_Loaded(System.Object,System.Windows.RoutedEventArgs)">
              <summary>
@@ -193,6 +195,74 @@
             List of object Song related to this class
             </summary>
         </member>
+        <member name="T:Aplikacja.DatabaseService">
+            <summary>
+            Object for accessing database context
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.#ctor">
+            <summary>
+            Public default ctor, initalizes database context
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.IsAuthorNameUnique(System.String)">
+            <summary>
+            Implemetation of IAuthorUniquenessChecker interface
+            </summary>
+            <param name="authorName">Name that needs to be checked against db</param>
+            <returns>Bool indicating if author name is already used in db</returns>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.Dispose">
+            <summary>
+            Helper function for disposing of db context after application exit
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.PreloadEntities">
+            <summary>
+            Helper functions that preloads entities for MVVVM
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.AuthorsAsObservable">
+            <summary>
+            Helper function returning Author collection as observable
+            </summary>
+            <returns>Observable Author collection</returns>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.SongsAsObservable">
+            <summary>
+            Helper function returning Song collection as observable
+            </summary>
+            <returns>Observable Song collection</returns>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.Commit">
+            <summary>
+            Helper function that saves all changes to db
+            </summary>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.AddSong(Aplikacja.Song)">
+            <summary>
+            Helper fucntion that adds song to a db
+            </summary>
+            <param name="song">Song to be added</param>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.AddAuthor(Aplikacja.Author)">
+            <summary>
+            Helper fucntion that adds author to a db
+            </summary>
+            <param name="author">Author to be added</param>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.RemoveSong(Aplikacja.Song)">
+            <summary>
+            Helper function that removes a Song from database
+            </summary>
+            <param name="song">Song to be removed</param>
+        </member>
+        <member name="M:Aplikacja.DatabaseService.RemoveAuthor(Aplikacja.Author)">
+            <summary>
+            Helpers function that removes an Author from database
+            </summary>
+            <param name="author">Author to be removed</param>
+        </member>
         <member name="T:Aplikacja.DatebaseContext">
             <summary>
             Class which is responsible for interacting with the entity model and the database.
@@ -271,11 +341,12 @@
             Message shown to user.
             </summary>
         </member>
-        <member name="M:Aplikacja.SongsLastFocused.#ctor(Aplikacja.MainWindow)">
+        <member name="M:Aplikacja.SongsLastFocused.#ctor(Aplikacja.MainWindow,Aplikacja.DatabaseService)">
             <summary>
             Ctor of SongsLastFocused.
             </summary>
             <param name="mainWindow"> The main window of the application  </param>
+            <param name="service"> Object for accessing database </param>
         </member>
         <member name="M:Aplikacja.SongsLastFocused.DeleteRecord">
             <summary>
@@ -292,7 +363,7 @@
             Message shown to user.
             </summary>
         </member>
-        <member name="M:Aplikacja.AuthorsLastFocused.#ctor(Aplikacja.MainWindow)">
+        <member name="M:Aplikacja.AuthorsLastFocused.#ctor(Aplikacja.MainWindow,Aplikacja.DatabaseService)">
             <summary>
             Ctor of AuthorsLastFocused
             </summary>
@@ -308,23 +379,13 @@
             Factory for ILastFocusedListViewDelegate objects
             </summary>
         </member>
-        <member name="M:Aplikacja.LastFocusedListViewFactory.Create(Aplikacja.LastFocusedListView,Aplikacja.MainWindow)">
+        <member name="M:Aplikacja.LastFocusedListViewFactory.Create(Aplikacja.LastFocusedListView,Aplikacja.MainWindow,Aplikacja.DatabaseService)">
             <summary>
             The method creates a ILastFocusedListViewDelegate
             </summary>
             <param name="lastFocusedListView"> The last focused ListView </param>
             <param name="mainWindow"> The main window of the application </param>
             <returns> The listView focused </returns>
-        </member>
-        <member name="T:Aplikacja.IMainWindow">
-            <summary>
-            Interface for main window
-            </summary>
-        </member>
-        <member name="M:Aplikacja.IMainWindow.IsAuthorInDb(System.String)">
-            <summary>
-            Checks if Author name is already in database
-            </summary>
         </member>
         <member name="T:Aplikacja.MainWindow">
             <summary>
@@ -334,9 +395,9 @@
             MainWindow
             </summary>
         </member>
-        <member name="F:Aplikacja.MainWindow._context">
+        <member name="F:Aplikacja.MainWindow._service">
             <summary>
-            Database context
+            Object for accessing the database
             </summary>
         </member>
         <member name="F:Aplikacja.MainWindow.lastFocused">
@@ -347,16 +408,6 @@
         <member name="P:Aplikacja.MainWindow.AuthorsViewSource">
             <summary>
             CollectionViewSource bound to Authors list.
-            </summary>
-        </member>
-        <member name="P:Aplikacja.MainWindow.Context">
-            <summary>
-            Public getter for database context
-            </summary>
-        </member>
-        <member name="M:Aplikacja.MainWindow.IsAuthorInDb(System.String)">
-            <summary>
-            Checks if Author name is already in database
             </summary>
         </member>
         <member name="M:Aplikacja.MainWindow.#ctor">
@@ -381,7 +432,7 @@
         </member>
         <member name="M:Aplikacja.MainWindow.processAddSongDialogResult(System.Nullable{System.Boolean},Aplikacja.AddSongDialog)">
             <summary>
-            Method processes result of AddSongDialog
+            Method that processes result of AddSongDialog
             </summary>
             <param name="result"> Result of AddSongDialog.ShowDialog() call</param>
             <param name="dlg">AddSongDialog that was called</param>
@@ -407,19 +458,19 @@
             <param name="sender"> The source of the event. </param>
             <param name="e"> An object that contains event data. </param>
         </member>
-        <member name="M:Aplikacja.MainWindow.AuthorsListView_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Callback for focusing ListView of Authors
-            </summary>
-            <param name="sender">  The source of the event. </param>
-            <param name="e"> An object that contains event data.</param>
-        </member>
         <member name="M:Aplikacja.MainWindow.Hyperlink_OnRequestNavigate(System.Object,System.Windows.Navigation.RequestNavigateEventArgs)">
             <summary>
              If the hyperlink is pressed then the method is executed.
             </summary>
             <param name="sender">  The source of the event. </param>
             <param name="e"> An object that contains no event data.</param>
+        </member>
+        <member name="M:Aplikacja.MainWindow.AuthorsListView_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Callback for focusing ListView of Authors
+            </summary>
+            <param name="sender">  The source of the event. </param>
+            <param name="e"> An object that contains event data.</param>
         </member>
         <member name="M:Aplikacja.MainWindow.SongsListView_GotFocus(System.Object,System.Windows.RoutedEventArgs)">
             <summary>

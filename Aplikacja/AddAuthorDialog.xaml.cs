@@ -20,15 +20,15 @@ namespace Aplikacja
     /// </summary>
     public class AuthorNameValidation : ValidationRule
     {
-        private IMainWindow mainWindow;
+        private IAuthorUniquenessChecker _authorUniquenessChecker;
 
         /// <summary>
         /// Ctor of AuthorNameValidation
         /// </summary>
-        /// <param name="mainWindow"> The main window of the application </param>
-        public AuthorNameValidation(IMainWindow mainWindow)
+        /// <param name="authorUniquenessChecker"> Object that lets us check if author name is unique </param>
+        public AuthorNameValidation(IAuthorUniquenessChecker authorUniquenessChecker)
         {
-            this.mainWindow = mainWindow;
+            this._authorUniquenessChecker = authorUniquenessChecker;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Aplikacja
                 return new ValidationResult(false, "Author name can not be empty");
             }
 
-            if (mainWindow.IsAuthorInDb(value_string))
+            if (!_authorUniquenessChecker.IsAuthorNameUnique(value_string))
             {
                 return new ValidationResult(false, "Author already in a database");
             }
@@ -70,8 +70,6 @@ namespace Aplikacja
     /// </summary>
     public partial class AddAuthorDialog : Window
     {
-        private MainWindow mainWindow;
-
         /// <summary>
         /// Gets or sets author's name
         /// </summary>
@@ -81,13 +79,13 @@ namespace Aplikacja
         /// Ctor of AddAuthorDialog
         /// </summary>
         /// <param name="mainWindow">The main window of the application</param>
-        public AddAuthorDialog(MainWindow mainWindow)
+        /// <param name="authorUniquenessChecker">Object for checking author name uniqueness</param>
+        public AddAuthorDialog(MainWindow mainWindow, IAuthorUniquenessChecker authorUniquenessChecker)
         {
             InitializeComponent();
-            this.mainWindow = mainWindow;
 
             var binding = BindingOperations.GetBinding(this.AuthorTextBox, TextBox.TextProperty);
-            var validation = new AuthorNameValidation(mainWindow);
+            var validation = new AuthorNameValidation(authorUniquenessChecker);
             binding.ValidationRules.Add(validation);
         }
 
